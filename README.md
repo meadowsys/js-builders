@@ -1,7 +1,5 @@
-# js-builders
+# Crate name available
 
-Builders for JavaScript objects and methods in Rust (WASM)
+I reserved this name for a project, before fully working out its purpose and API design, so I have changed its name now (to `wiwi-wasm`, very creative I know :p).
 
-## MSRV
-
-Rust 1.85, which is, at the time of writing, only available on the beta/nightly release channels.
+I consent to the transfer of this crate to the first person who asks <help@crates.io> for it. (<https://crates.io/policies#package-ownership>)
