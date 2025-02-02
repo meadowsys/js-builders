@@ -277,7 +277,7 @@
 	<span class="doccomment">/// Executes `Reflect.set(target, property_key, value)`
 	</span><span class="comment">// todo make the return types better
 	</span><span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>executes(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt; {
+	</span><span class="kw">pub fn </span>execute(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt; {
 		<span class="macro">unsafe_assume_init!</span> { <span class="self">self </span>target property_key value }
 		<span class="kw">unsafe </span>{ raw::set3(target, property_key, value) }
 	}
@@ -292,7 +292,7 @@
 	<span class="doccomment">/// Executes `Reflect.set(target, property_key, value, receiver)`
 	</span><span class="comment">// todo make the return types better
 	</span><span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>executes(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt; {
+	</span><span class="kw">pub fn </span>execute(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt; {
 		<span class="macro">unsafe_assume_init!</span> { <span class="self">self </span>target property_key value receiver }
 		<span class="kw">unsafe </span>{ raw::set4(target, property_key, value, receiver) }
 	}
