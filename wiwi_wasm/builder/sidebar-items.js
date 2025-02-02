@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["Init","PhantomData","Uninit"],"trait":["InitStatus","IsInit","IsUninit"]};

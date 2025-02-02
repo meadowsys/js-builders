@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"attr":["wasm_bindgen"],"fn":["bigint","number","reflect"],"mod":["builder","reflect"],"struct":["ExternAny","ExternBigint","ExternBigintNs","ExternNumber","ExternNumberNs","ExternNumberObject","ExternObject","ExternReflectNs","ExternString","ExternStringNs","ExternStringObject"]};
