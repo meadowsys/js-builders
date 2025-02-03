@@ -104,7 +104,8 @@
 <a href="#103" id="103">103</a>
 <a href="#104" id="104">104</a>
 <a href="#105" id="105">105</a>
-<a href="#106" id="106">106</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
 
 </span><span class="comment">// Checklist™
 // - use statements
@@ -169,11 +170,12 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">type </span>PhantomDataInvariant&lt;T&gt; = PhantomData&lt;<span class="kw">fn</span>(T) -&gt; T&gt;;
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">trait </span>PtrWriteCastLifetimeExt&lt;T&gt; {
-	<span class="doccomment">/// Convenience method to cast the pointer, then call `write` on the casted pointer
+	<span class="doccomment">/// Convenience method to change the lifetime of the reference type of the
+	/// pointer, then call `write` on the casted pointer
 	///
 	/// # Safety
 	///
-	/// You must ensure the type the pointer is cast to is a valid cast, and follow
+	/// You must ensure that your lifetimes are correct, as well as follow
 	/// safety requirements of [`ptr::write`](std::ptr::write).
 	</span><span class="kw">unsafe fn </span>cast_lifetime_write(<span class="self">self</span>, value: <span class="kw-2">&amp;</span>T);
 }
