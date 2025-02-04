@@ -85,29 +85,14 @@
 <a href="#84" id="84">84</a>
 <a href="#85" id="85">85</a>
 <a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a>
-<a href="#88" id="88">88</a>
-<a href="#89" id="89">89</a>
-<a href="#90" id="90">90</a>
-<a href="#91" id="91">91</a>
-<a href="#92" id="92">92</a>
-<a href="#93" id="93">93</a>
-<a href="#94" id="94">94</a>
-<a href="#95" id="95">95</a>
-<a href="#96" id="96">96</a>
-<a href="#97" id="97">97</a>
-<a href="#98" id="98">98</a>
-<a href="#99" id="99">99</a>
-<a href="#100" id="100">100</a>
-<a href="#101" id="101">101</a>
-<a href="#102" id="102">102</a>
-<a href="#103" id="103">103</a>
-<a href="#104" id="104">104</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
+<a href="#87" id="87">87</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 
 <span class="attr">#[inline]
 </span><span class="kw">pub fn </span>object() -&gt; ExternObjectNs {
 	<span class="kw">let </span>inner = raw::OBJECT.with(Clone::clone);
-	<span class="kw">unsafe </span>{ ExternObjectNs::from_js_value_unchecked(inner) }
+	<span class="kw">let </span>inner = ExternAny::from_js_value(inner);
+	<span class="kw">let </span>inner = <span class="kw">unsafe </span>{ ExternObject::from_any_unchecked(inner) };
+	ExternObjectNs { inner }
 }
 
 <span class="attr">#[repr(transparent)]
@@ -116,12 +101,6 @@
 }
 
 <span class="kw">impl </span>ExternObjectNs {
-	<span class="attr">#[inline]
-	</span><span class="kw">unsafe fn </span>from_js_value_unchecked(value: JsValue) -&gt; <span class="self">Self </span>{
-		<span class="kw">let </span>inner = <span class="kw">unsafe </span>{ ExternObject::from_js_value_unchecked(value) };
-		<span class="self">Self </span>{ inner }
-	}
-
 	<span class="attr">#[expect(
 		clippy::new_ret_no_self,
 		clippy::wrong_self_convention,
@@ -129,7 +108,7 @@
 	</span>)]
 	#[inline]
 	</span><span class="kw">pub fn </span>new(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ExternObject {
-		<span class="kw">unsafe </span>{ ExternObject::from_js_value_unchecked(raw::new_object()) }
+		<span class="kw">unsafe </span>{ ExternObject::from_any_unchecked(ExternAny::from_js_value(raw::new_object())) }
 	}
 }
 
@@ -151,20 +130,6 @@
 	}
 
 	<span class="attr">#[inline]
-	</span><span class="kw">pub unsafe fn </span>from_js_value_unchecked(value: JsValue) -&gt; <span class="self">Self </span>{
-		<span class="kw">let </span>value = ExternAny::from_js_value(value);
-		<span class="comment">// SAFETY: caller promises provided `value` is actually an object
-		</span><span class="kw">unsafe </span>{ <span class="self">Self</span>::from_any_unchecked(value) }
-	}
-
-	<span class="attr">#[inline]
-	</span><span class="kw">pub unsafe fn </span>from_js_value_ref_unchecked(value: <span class="kw-2">&amp;</span>JsValue) -&gt; <span class="kw-2">&amp;</span><span class="self">Self </span>{
-		<span class="kw">let </span>value = ExternAny::from_js_value_ref(value);
-		<span class="comment">// SAFETY: caller promises provided `value` is actually an object
-		</span><span class="kw">unsafe </span>{ <span class="self">Self</span>::from_any_ref_unchecked(value) }
-	}
-
-	<span class="attr">#[inline]
 	</span><span class="kw">pub fn </span>as_any(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ExternAny {
 		<span class="kw-2">&amp;</span><span class="self">self</span>.inner
 	}
@@ -181,6 +146,7 @@
 
 <span class="kw">mod </span>raw {
 	<span class="kw">use super</span>::<span class="kw-2">*</span>;
+	<span class="kw">use </span>wasm_bindgen::JsValue;
 
 	<span class="attr">#[wasm_bindgen]
 	</span><span class="kw">extern </span>{

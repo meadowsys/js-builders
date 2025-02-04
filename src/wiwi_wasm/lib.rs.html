@@ -70,7 +70,8 @@
 <a href="#69" id="69">69</a>
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
-<a href="#72" id="72">72</a></pre></div><pre class="rust"><code><span class="attr">#![allow(
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a></pre></div><pre class="rust"><code><span class="attr">#![allow(
 	dead_code,
 	clippy::missing_safety_doc,
 	reason = <span class="string">"wip"
@@ -103,6 +104,7 @@
 <span class="kw">pub use </span>wasm_bindgen::prelude::wasm_bindgen;
 
 <span class="kw">pub mod </span>builder;
+<span class="kw">pub mod </span>extern_crates;
 <span class="kw">mod </span>sealed;
 
 <span class="kw">mod </span>any;
@@ -122,11 +124,11 @@
 	<span class="kw">pub use crate</span>::{ ExternAny, ExternObject, wasm_bindgen };
 	<span class="kw">pub use </span><span class="kw">crate</span>::builder::<span class="kw-2">*</span>;
 	<span class="kw">pub use </span><span class="kw">crate</span>::sealed::Sealed;
-	<span class="kw">pub use </span>std::mem::{ ManuallyDrop, MaybeUninit };
+	<span class="kw">pub use </span>std::mem::{ ManuallyDrop, MaybeUninit, transmute };
 	<span class="kw">pub use </span>std::ops::Deref;
-	<span class="kw">pub use </span>wasm_bindgen::JsValue;
 
-	<span class="attr">#[inline]
+	<span class="attr">#[deprecated(note = <span class="string">"nei"</span>)]
+	#[inline]
 	</span><span class="kw">pub fn </span>uninit&lt;T&gt;() -&gt; MaybeUninit&lt;T&gt; {
 		MaybeUninit::uninit()
 	}
