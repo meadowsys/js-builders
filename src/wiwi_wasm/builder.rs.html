@@ -373,7 +373,85 @@
 <a href="#372" id="372">372</a>
 <a href="#373" id="373">373</a>
 <a href="#374" id="374">374</a>
-<a href="#375" id="375">375</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
+<a href="#402" id="402">402</a>
+<a href="#403" id="403">403</a>
+<a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
 
 </span><span class="comment">// Checklist™
 // - use statements
@@ -402,11 +480,14 @@
 
 </span><span class="kw">pub use </span>std::marker::PhantomData;
 
-<span class="kw">pub struct </span>Uninit {
+<span class="doccomment">/// Marker struct for a field in the uninitialised state
+</span><span class="kw">pub struct </span>Uninit {
 	__private: ()
 }
 
-<span class="kw">pub struct </span>Init&lt;T = ()&gt;
+<span class="doccomment">/// Marker struct for a field in the initialised state, optionally
+/// containing more state in the form of another type `T`
+</span><span class="kw">pub struct </span>Init&lt;T = ()&gt;
 <span class="kw">where
 	</span>T: <span class="question-mark">?</span>Sized
 {
@@ -418,18 +499,25 @@
 ///
 /// # Safety
 ///
-/// [`IS_INIT`](InitStatus::IS_INIT) and [`IS_UNINIT`](InitStatus::IS_UNINIT)
-/// must both be set correctly to acccurately represent the state of the field.
+/// [`IS_INIT`] and [`IS_UNINIT`] must both be set correctly to acccurately
+/// represent the state of the field. If you set [`IS_INIT`] correctly, there is
+/// a default implementation for [`IS_UNINIT`] which is just an inversion of
+/// [`IS_INIT`], and therefore always correct.
+///
+/// [`IS_INIT`]: InitStatus::IS_INIT
+/// [`IS_UNINIT`]: InitStatus::IS_UNINIT
 </span><span class="kw">pub unsafe trait </span>InitStatus {
 	<span class="kw">const </span>IS_INIT: bool;
 	<span class="kw">const </span>IS_UNINIT: bool = !<span class="self">Self</span>::IS_INIT;
 }
 
-<span class="kw">unsafe impl </span>InitStatus <span class="kw">for </span>Uninit {
+<span class="comment">// SAFETY: `Uninit` represents uninitialised
+</span><span class="kw">unsafe impl </span>InitStatus <span class="kw">for </span>Uninit {
 	<span class="kw">const </span>IS_INIT: bool = <span class="bool-val">false</span>;
 }
 
-<span class="kw">unsafe impl</span>&lt;T&gt; InitStatus <span class="kw">for </span>Init&lt;T&gt;
+<span class="comment">// SAFETY: `Init` represents initialised
+</span><span class="kw">unsafe impl</span>&lt;T&gt; InitStatus <span class="kw">for </span>Init&lt;T&gt;
 <span class="kw">where
 	</span>T: <span class="question-mark">?</span>Sized
 {
@@ -443,7 +531,8 @@
 /// Marker struct must actually represent an uninitialised state.
 </span><span class="kw">pub unsafe trait </span>IsUninit: InitStatus {}
 
-<span class="kw">unsafe impl </span>IsUninit <span class="kw">for </span>Uninit {}
+<span class="comment">// SAFETY: `Uninit` represents uninitialised
+</span><span class="kw">unsafe impl </span>IsUninit <span class="kw">for </span>Uninit {}
 
 <span class="doccomment">/// Marker trait for marker structs that represent initialised state
 ///
@@ -452,29 +541,96 @@
 /// Marker struct must actually represent an initialised state.
 </span><span class="kw">pub unsafe trait </span>IsInit: InitStatus {}
 
-<span class="kw">unsafe impl</span>&lt;T&gt; IsInit <span class="kw">for </span>Init&lt;T&gt;
+<span class="comment">// SAFETY: `Init` represents initialised
+</span><span class="kw">unsafe impl</span>&lt;T&gt; IsInit <span class="kw">for </span>Init&lt;T&gt;
 <span class="kw">where
 	</span>T: <span class="question-mark">?</span>Sized
 {}
 
-<span class="kw">pub unsafe trait </span>Slot&lt;T&gt;
+<span class="doccomment">/// Types that can be used safely for slots of type `T`, just like
+/// [`SlotUnchecked`], but can only be implemented on types for which it is
+/// correct to use
+///
+/// For example, if we have an API that is expecting a string, we would only
+/// implement this trait for string types, but we can still implement
+/// [`SlotUnchecked`] for types that isn't guaranteed to be a string,
+/// like [`ExternAny`](crate::ExternAny).
+///
+/// To implement this trait, implement [`SlotUnchecked`] first, as that trait
+/// contains the actual implementation functionality. This trait is "only"
+/// a marker trait for those who implement [`SlotUnchecked`], and can guarantee
+/// that all values of the type are valid for this slot.
+</span><span class="kw">pub unsafe trait </span>Slot&lt;T&gt;
 <span class="kw">where
 	</span><span class="self">Self</span>: SlotUnchecked&lt;T&gt;
 {}
 
-<span class="kw">pub unsafe trait </span>SlotUnchecked&lt;T&gt;
+<span class="doccomment">/// Types that can be used for slots of type `T`, just like [`Slot`], but much,
+/// _much_ looser in restrictions in which types can implement this trait
+///
+/// See documentation on [`Slot`] for more details on these two traits.
+</span><span class="kw">pub unsafe trait </span>SlotUnchecked&lt;T&gt;
 <span class="kw">where
 	</span><span class="self">Self</span>: Sized
 {
-	<span class="kw">type </span><span class="prelude-ty">Result</span>: Sized;
-	<span class="kw">unsafe fn </span>write(<span class="self">self</span>, slot: <span class="kw-2">&amp;mut </span>T);
-	<span class="kw">unsafe fn </span>read(slot: T) -&gt; <span class="self">Self</span>::Result;
-	<span class="kw">fn </span>as_ref(result: <span class="kw-2">&amp;</span><span class="self">Self</span>::Result) -&gt; <span class="kw-2">&amp;</span><span class="kw">crate</span>::ExternAny;
+	<span class="doccomment">/// Output type of reading from a slot previously written to (can be anything)
+	</span><span class="kw">type </span><span class="prelude-ty">Result</span>: Sized;
+
+	<span class="doccomment">/// Writes `self` into `slot`, doing as little work as needed
+	///
+	/// Work should be deferred to [`read`], if possible.
+	///
+	/// # Safety
+	///
+	/// Implementors must store a value into `slot`, that [`read`]
+	/// can read back later. [`read`] is allowed to rely on the fact that
+	/// something has been written.
+	///
+	/// It may be undesireable to call [`write`] twice on the same `slot`,
+	/// but even with that, there is no _strict_ requirement that callers only
+	/// call [`write`] once.
+	///
+	/// [`read`]: SlotUnchecked::read
+	/// [`write`]: SlotUnchecked::write
+	</span><span class="kw">unsafe fn </span>write(<span class="self">self</span>, slot: <span class="kw-2">&amp;mut </span>T);
+
+	<span class="doccomment">/// Reads back what was written to `slot` in [`write`], then processes it
+	/// into the read output type as necessary
+	///
+	/// # Safety
+	///
+	/// Implementors can assume that [`write`] has been called on `slot` and a
+	/// value has been written as expected.
+	///
+	/// Callers must call [`write`] on this slot first, before passing it
+	/// to this function.
+	///
+	/// [`write`]: SlotUnchecked::write
+	</span><span class="kw">unsafe fn </span>read(slot: T) -&gt; <span class="self">Self</span>::Result;
+
+	<span class="doccomment">/// Converts the read output type into a reference of type
+	/// [`&amp;ExternAny`](crate::ExternAny)
+	///
+	/// This function is used so implementors can return non reference types.
+	/// Trait consumers would then take ownership of the provided output, and
+	/// use this function to get a reference type [`&amp;ExternAny`](crate::ExternAny)
+	/// from it.
+	</span><span class="kw">fn </span>as_ref(result: <span class="kw-2">&amp;</span><span class="self">Self</span>::Result) -&gt; <span class="kw-2">&amp;</span><span class="kw">crate</span>::ExternAny;
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">type </span>PhantomDataInvariant&lt;T&gt; = PhantomData&lt;<span class="kw">fn</span>(T) -&gt; T&gt;;
+<span class="doccomment">/// [`PhantomData`] but invariant over `T`
+///
+/// To construct values of this type, you still must use the expression
+/// `PhantomData`, as Rust doesn't like using type definitions as unit struct
+/// constructors.
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">type </span>PhantomDataInvariant&lt;T&gt; = PhantomData&lt;<span class="kw">fn</span>(T) -&gt; T&gt;;
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">trait </span>PtrWriteCastLifetimeExt&lt;T&gt; {
+<span class="doccomment">/// Provides convenience method
+/// [`cast_lifetime_write`](PtrWriteCastLifetimeExt::cast_lifetime_write)
+/// for pointers to references, to cast the lifetime of the reference type to
+/// something else before writing to the pointer (extremely, _extremely_
+/// simple to misuse!)
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">trait </span>PtrWriteCastLifetimeExt&lt;T&gt; {
 	<span class="doccomment">/// Convenience method to change the lifetime of the reference type of the
 	/// pointer, then call `write` on the casted pointer
 	///
