@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Init","PhantomData","Uninit"],"trait":["AcceptableInSlot","AcceptableInSlotUnchecked","InitStatus","IsInit","IsUninit"]};
+window.SIDEBAR_ITEMS = {"struct":["Init","PhantomData","Uninit"],"trait":["InitStatus","IsInit","IsUninit","Slot","SlotUnchecked"]};

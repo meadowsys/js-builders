@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["reflect"],"mod":["set"],"struct":["ExternReflectNs"]};
+window.SIDEBAR_ITEMS = {"fn":["reflect"],"mod":["prevent_extensions","set"],"struct":["ExternReflectNs"]};

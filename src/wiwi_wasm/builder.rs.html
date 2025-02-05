@@ -370,7 +370,10 @@
 <a href="#369" id="369">369</a>
 <a href="#370" id="370">370</a>
 <a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
 
 </span><span class="comment">// Checklist™
 // - use statements
@@ -383,6 +386,19 @@
 // - impl builder uninit
 // - impl blocks for finished ones with `call` or `build` fns
 // - impl block for builder fns, `change_state`, internal functions etc
+
+// Checklist™ v2
+// - use statements
+// - builder struct (with repr(transparent), `inner`, `__marker`)
+// - builder inner struct
+// - `gen_state!` invocation (generates state trait, state
+//   container struct, uninit type def, impl state for statecontainer)
+// - impl builder uninit
+// - impl blocks for finished ones with `execute` or `build` fns
+// - impl block for builder fns, `change_state`, internal functions etc
+// - target slot union definitions (will want `uninit`, likely will
+//   want `any`, and whatever other incompatible types in there), and
+//   associated impls (`Slot` and `SlotUnchecked` impls etc)
 
 </span><span class="kw">pub use </span>std::marker::PhantomData;
 
@@ -441,29 +457,19 @@
 	</span>T: <span class="question-mark">?</span>Sized
 {}
 
-<span class="kw">pub unsafe trait </span>AcceptableInSlot&lt;T&gt;
+<span class="kw">pub unsafe trait </span>Slot&lt;T&gt;
 <span class="kw">where
-	</span><span class="self">Self</span>: AcceptableInSlotUnchecked&lt;T&gt;
-{
+	</span><span class="self">Self</span>: SlotUnchecked&lt;T&gt;
+{}
 
-	<span class="attr">#[inline]
-	</span><span class="kw">unsafe fn </span>write(<span class="self">self</span>, slot: <span class="kw-2">&amp;mut </span>T) {
-		<span class="kw">unsafe </span>{ <span class="self">self</span>.write_unchecked(slot) }
-	}
-
-	<span class="attr">#[inline]
-	</span><span class="kw">unsafe fn </span>read(slot: T) -&gt; <span class="self">Self</span>::Result {
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::read_unchecked(slot) }
-	}
-}
-
-<span class="kw">pub unsafe trait </span>AcceptableInSlotUnchecked&lt;T&gt;
+<span class="kw">pub unsafe trait </span>SlotUnchecked&lt;T&gt;
 <span class="kw">where
 	</span><span class="self">Self</span>: Sized
 {
 	<span class="kw">type </span><span class="prelude-ty">Result</span>: Sized;
-	<span class="kw">unsafe fn </span>write_unchecked(<span class="self">self</span>, slot: <span class="kw-2">&amp;mut </span>T);
-	<span class="kw">unsafe fn </span>read_unchecked(slot: T) -&gt; <span class="self">Self</span>::Result;
+	<span class="kw">unsafe fn </span>write(<span class="self">self</span>, slot: <span class="kw-2">&amp;mut </span>T);
+	<span class="kw">unsafe fn </span>read(slot: T) -&gt; <span class="self">Self</span>::Result;
+	<span class="kw">fn </span>as_ref(result: <span class="kw-2">&amp;</span><span class="self">Self</span>::Result) -&gt; <span class="kw-2">&amp;</span><span class="kw">crate</span>::ExternAny;
 }
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">type </span>PhantomDataInvariant&lt;T&gt; = PhantomData&lt;<span class="kw">fn</span>(T) -&gt; T&gt;;
@@ -523,7 +529,7 @@
 	} =&gt; {
 		$(
 			<span class="kw">let </span><span class="macro-nonterminal">$ident </span>= <span class="macro-nonterminal">$ty::read</span>(<span class="macro-nonterminal">$self</span>.inner.<span class="macro-nonterminal">$ident</span>);
-			<span class="kw">let </span><span class="macro-nonterminal">$ident </span>= AsRef::&lt;ExternAny&gt;::as_ref(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$ident</span>).as_js_value();
+			<span class="kw">let </span><span class="macro-nonterminal">$ident </span>= <span class="macro-nonterminal">$ty::as_ref</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$ident</span>).as_js_value();
 		)*
 	}
 }
