@@ -50,9 +50,13 @@
 <a href="#49" id="49">49</a>
 <a href="#50" id="50">50</a>
 <a href="#51" id="51">51</a>
-<a href="#52" id="52">52</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
+<a href="#52" id="52">52</a>
+<a href="#53" id="53">53</a>
+<a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 
-<span class="attr">#[inline]
+<span class="doccomment">/// Get the global `BigInt` namespace object
+</span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>bigint() -&gt; ExternBigintNs {
 	<span class="kw">let </span>inner = raw::BIGINT.with(Clone::clone);
 	<span class="kw">let </span>inner = ExternAny::from_js_value(inner);
@@ -60,12 +64,14 @@
 	ExternBigintNs { inner }
 }
 
-<span class="attr">#[repr(transparent)]
+<span class="doccomment">/// Global `BigInt` namespace
+</span><span class="attr">#[repr(transparent)]
 </span><span class="kw">pub struct </span>ExternBigintNs {
 	inner: ExternObject
 }
 
-<span class="attr">#[repr(transparent)]
+<span class="doccomment">/// `bigint` primitive type
+</span><span class="attr">#[repr(transparent)]
 </span><span class="kw">pub struct </span>ExternBigint {
 	inner: ExternAny
 }

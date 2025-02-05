@@ -52,9 +52,14 @@
 <a href="#51" id="51">51</a>
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
-<a href="#54" id="54">54</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
+<a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
+<a href="#58" id="58">58</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 
-<span class="attr">#[inline]
+<span class="doccomment">/// Get the global `Number` namespace object
+</span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>number() -&gt; ExternNumberNs {
 	<span class="kw">let </span>inner = raw::NUMBER.with(Clone::clone);
 	<span class="kw">let </span>inner = ExternAny::from_js_value(inner);
@@ -62,12 +67,14 @@
 	ExternNumberNs { inner }
 }
 
-<span class="attr">#[repr(transparent)]
+<span class="doccomment">/// Global `Number` namespace
+</span><span class="attr">#[repr(transparent)]
 </span><span class="kw">pub struct </span>ExternNumberNs {
 	inner: ExternObject
 }
 
-<span class="attr">#[repr(transparent)]
+<span class="doccomment">/// `number` primitive type
+</span><span class="attr">#[repr(transparent)]
 </span><span class="kw">pub struct </span>ExternNumber {
 	inner: ExternAny
 }
@@ -88,7 +95,8 @@
 	}
 }
 
-<span class="attr">#[repr(transparent)]
+<span class="doccomment">/// `Number` wrapper object
+</span><span class="attr">#[repr(transparent)]
 </span><span class="kw">pub struct </span>ExternNumberObject {
 	inner: ExternObject
 }
