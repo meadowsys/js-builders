@@ -67,12 +67,8 @@
 <a href="#66" id="66">66</a>
 <a href="#67" id="67">67</a>
 <a href="#68" id="68">68</a>
-<a href="#69" id="69">69</a>
-<a href="#70" id="70">70</a>
-<a href="#71" id="71">71</a>
-<a href="#72" id="72">72</a>
-<a href="#73" id="73">73</a>
-<a href="#74" id="74">74</a></pre></div><pre class="rust"><code><span class="attr">#![allow(
+<a href="#69" id="69">69</a></pre></div><pre class="rust"><code><span class="attr">#![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
+#![allow(
 	dead_code,
 	unused_imports,
 	clippy::missing_safety_doc,
@@ -105,9 +101,9 @@
 <span class="kw">pub use </span><span class="self">self</span>::string::{ ExternString, ExternStringNs, ExternStringObject };
 <span class="kw">pub use </span>wasm_bindgen::prelude::wasm_bindgen;
 
-<span class="kw">pub mod </span>builder;
 <span class="kw">pub mod </span>extern_crates;
-<span class="kw">mod </span>sealed;
+<span class="kw">pub mod </span>slot;
+<span class="kw">pub mod </span>util;
 
 <span class="kw">mod </span>any;
 <span class="kw">mod </span>bigint;
@@ -123,17 +119,11 @@
 	reason = <span class="string">"prelude"
 </span>)]
 </span><span class="kw">mod </span>prelude_internal {
-	<span class="kw">pub use crate</span>::{ ExternAny, ExternObject, wasm_bindgen };
-	<span class="kw">pub use </span><span class="kw">crate</span>::builder::<span class="kw-2">*</span>;
-	<span class="kw">pub use </span><span class="kw">crate</span>::sealed::Sealed;
-	<span class="kw">pub use </span>std::mem::{ ManuallyDrop, MaybeUninit, transmute };
-	<span class="kw">pub use </span>std::ops::Deref;
-
-	<span class="attr">#[deprecated(note = <span class="string">"nei"</span>)]
-	#[inline]
-	</span><span class="kw">pub fn </span>uninit&lt;T&gt;() -&gt; MaybeUninit&lt;T&gt; {
-		MaybeUninit::uninit()
-	}
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use crate</span>::{ ExternAny, ExternObject, wasm_bindgen };
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="kw">crate</span>::util::<span class="kw-2">*</span>;
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="kw">crate</span>::slot::<span class="kw-2">*</span>;
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>core::mem::{ ManuallyDrop, MaybeUninit, transmute };
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>core::ops::Deref;
 }
 
 <span class="attr">#[allow(
@@ -143,7 +133,7 @@
 </span>)]
 #[cfg(test)]
 </span><span class="kw">mod </span>prelude_test {
-	<span class="kw">pub use </span>wasm_bindgen_test::wasm_bindgen_test;
-	<span class="kw">pub use </span>std::hint::black_box;
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>wasm_bindgen_test::wasm_bindgen_test;
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>core::hint::black_box;
 }
 </code></pre></div></section></main></body></html>

@@ -277,7 +277,27 @@
 <a href="#276" id="276">276</a>
 <a href="#277" id="277">277</a>
 <a href="#278" id="278">278</a>
-<a href="#279" id="279">279</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 
 <span class="kw">pub mod </span>apply;
 <span class="kw">pub mod </span>construct;
@@ -310,15 +330,86 @@
 
 <span class="kw">impl </span>ExternReflectNs {
 	<span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>as_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ExternObject {
+	</span><span class="kw">fn </span>as_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ExternObject {
 		<span class="kw-2">&amp;</span><span class="self">self</span>.inner
 	}
 
-	<span class="comment">// pub fn apply(&amp;self, ..) -&gt; buildersomething
+	<span class="doccomment">/// Create builder for `Reflect.apply()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>apply(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; apply::Builder&lt;<span class="lifetime">'static</span>, apply::StateUninit&gt; {
+		apply::Builder::new()
+	}
 
+	<span class="doccomment">/// Create builder for `Reflect.construct()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>construct(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; construct::Builder&lt;<span class="lifetime">'static</span>, construct::StateUninit&gt; {
+		construct::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.defineProperty()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>define_property(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; define_property::Builder&lt;<span class="lifetime">'static</span>, define_property::StateUninit&gt; {
+		define_property::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.deleteProperty()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>delete_property(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; delete_property::Builder&lt;<span class="lifetime">'static</span>, delete_property::StateUninit&gt; {
+		delete_property::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.get()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; get::Builder&lt;<span class="lifetime">'static</span>, get::StateUninit&gt; {
+		get::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.getOwnPropertyDescriptor()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>get_own_property_descriptor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; get_own_property_descriptor::Builder&lt;<span class="lifetime">'static</span>, get_own_property_descriptor::StateUninit&gt; {
+		get_own_property_descriptor::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.getPrototypeOf()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>get_prototype_of(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; get_prototype_of::Builder&lt;<span class="lifetime">'static</span>, get_prototype_of::StateUninit&gt; {
+		get_prototype_of::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.has()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>has(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; has::Builder&lt;<span class="lifetime">'static</span>, has::StateUninit&gt; {
+		has::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.isExtensible()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>is_extensible(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; is_extensible::Builder&lt;<span class="lifetime">'static</span>, is_extensible::StateUninit&gt; {
+		is_extensible::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.ownKeys()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>own_keys(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; own_keys::Builder&lt;<span class="lifetime">'static</span>, own_keys::StateUninit&gt; {
+		own_keys::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.preventExtensions()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>prevent_extensions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; prevent_extensions::Builder&lt;<span class="lifetime">'static</span>, prevent_extensions::StateUninit&gt; {
+		prevent_extensions::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.set()`
 	</span><span class="attr">#[inline]
 	</span><span class="kw">pub fn </span>set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; set::Builder&lt;<span class="lifetime">'static</span>, set::StateUninit&gt; {
 		set::Builder::new()
+	}
+
+	<span class="doccomment">/// Create builder for `Reflect.setPrototypeOf()`
+	</span><span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>set_prototype_of(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; set_prototype_of::Builder&lt;<span class="lifetime">'static</span>, set_prototype_of::StateUninit&gt; {
+		set_prototype_of::Builder::new()
 	}
 }
 
@@ -343,174 +434,133 @@
 		)]
 		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">static </span>REFLECT: JsValue;
 
-		<span class="comment">// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn apply(
-		// 	target: &amp;JsValue,
-		// 	this_argument: &amp;JsValue,
-		// 	// array-like
-		// 	arguments_list: &amp;JsValue,
-		// 	// returns result of calling given target function
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>apply(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			this_argument: <span class="kw-2">&amp;</span>JsValue,
+			arguments_list: <span class="kw-2">&amp;</span>JsValue,
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = construct,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn construct2(
-		// 	// function
-		// 	target: &amp;JsValue,
-		// 	// array-like
-		// 	arguments_list: &amp;JsValue
-		// 	// returns new instance of target, init by target as constructor
-		// 	// and given arguments_list
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = construct,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>construct2(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			arguments_list: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = construct,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn construct3(
-		// 	// function
-		// 	target: &amp;JsValue,
-		// 	// array-like
-		// 	arguments_list: &amp;JsValue,
-		// 	new_target: &amp;JsValue
-		// 	// returns new instance of new_target, init by target as constructor
-		// 	// and given arguments_list
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = construct,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>construct3(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			arguments_list: <span class="kw-2">&amp;</span>JsValue,
+			new_target: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = defineProperty,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn define_property(
-		// 	// object
-		// 	target: &amp;JsValue,
-		// 	// name of property (string? or autocast?)
-		// 	property_key: &amp;JsValue,
-		// 	attributes: &amp;JsValue
-		// 	// returns bool
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = defineProperty,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>define_property(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			property_key: <span class="kw-2">&amp;</span>JsValue,
+			attributes: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = deleteProperty,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn delete_property(
-		// 	target: &amp;JsValue,
-		// 	// name of property (string? or autocast?)
-		// 	property_key: &amp;JsValue
-		// 	// returns bool
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = deleteProperty,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>delete_property(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			property_key: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = get,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn get2(
-		// 	target: &amp;JsValue,
-		// 	// name of property (string? or autocast?)
-		// 	property_key: &amp;JsValue
-		// 	// returns value of property
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = get,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>get2(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			property_key: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = get,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn get3(
-		// 	target: &amp;JsValue,
-		// 	// name of property (string? or autocast?)
-		// 	property_key: &amp;JsValue,
-		// 	receiver: &amp;JsValue
-		// 	// returns value of property
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = get,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>get3(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			property_key: <span class="kw-2">&amp;</span>JsValue,
+			receiver: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = getOwnPropertyDescriptor,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn get_own_property_descriptor(
-		// 	target: &amp;JsValue,
-		// 	// name of property (string? or autocast?)
-		// 	property_key: &amp;JsValue
-		// 	// returns property descriptor object or undefined
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = getOwnPropertyDescriptor,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>get_own_property_descriptor(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			property_key: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = getPrototypeOf,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn get_prototype_of(
-		// 	target: &amp;JsValue
-		// 	// returns prototype (obj or null)
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = getPrototypeOf,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>get_prototype_of(
+			target: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn has(
-		// 	target: &amp;JsValue,
-		// 	// name of property (string? or autocast?)
-		// 	property_key: &amp;JsValue
-		// 	// returns bool
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>has(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			property_key: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = isExtensible,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn is_extensible(
-		// 	target: &amp;JsValue
-		// 	// returns bool
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = isExtensible,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>is_extensible(
+			target: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = ownKeys,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn own_keys(
-		// 	target: &amp;JsValue
-		// 	// returns array of target's own property keys
-		// 	// (incl strings and symbols)
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = ownKeys,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>own_keys(
+			target: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		</span><span class="attr">#[wasm_bindgen(
+		<span class="attr">#[wasm_bindgen(
 			js_namespace = Reflect,
 			js_name = preventExtensions,
 			catch
 		)]
 		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>prevent_extensions(
 			target: <span class="kw-2">&amp;</span>JsValue
-			<span class="comment">// returns bool
-			// throws TypeError
-		</span>) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
 		<span class="attr">#[wasm_bindgen(
 			js_namespace = Reflect,
@@ -519,13 +569,9 @@
 		)]
 		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>set3(
 			target: <span class="kw-2">&amp;</span>JsValue,
-			<span class="comment">// name of property (string? or autocast?)
-			</span>property_key: <span class="kw-2">&amp;</span>JsValue,
-			<span class="comment">// value to set
-			</span>value: <span class="kw-2">&amp;</span>JsValue
-			<span class="comment">// returns bool
-			// throws TypeError
-		</span>) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
+			property_key: <span class="kw-2">&amp;</span>JsValue,
+			value: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
 		<span class="attr">#[wasm_bindgen(
 			js_namespace = Reflect,
@@ -534,26 +580,20 @@
 		)]
 		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>set4(
 			target: <span class="kw-2">&amp;</span>JsValue,
-			<span class="comment">// name of property (string? or autocast?)
-			</span>property_key: <span class="kw-2">&amp;</span>JsValue,
+			property_key: <span class="kw-2">&amp;</span>JsValue,
 			value: <span class="kw-2">&amp;</span>JsValue,
 			receiver: <span class="kw-2">&amp;</span>JsValue
-			<span class="comment">// returns bool
-			// throws TypeError
-		</span>) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
 
-		<span class="comment">// #[wasm_bindgen(
-		// 	js_namespace = Reflect,
-		// 	js_name = setPrototypeOf,
-		// 	catch
-		// )]
-		// pub(crate) unsafe fn set_prototype_of(
-		// 	target: &amp;JsValue,
-		// 	// new prototype (object or null)
-		// 	prototype: &amp;JsValue
-		// 	// returns bool
-		// 	// throws TypeError
-		// ) -&gt; Result&lt;JsValue, JsValue&gt;;
-	</span>}
+		<span class="attr">#[wasm_bindgen(
+			js_namespace = Reflect,
+			js_name = setPrototypeOf,
+			catch
+		)]
+		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>set_prototype_of(
+			target: <span class="kw-2">&amp;</span>JsValue,
+			prototype: <span class="kw-2">&amp;</span>JsValue
+		) -&gt; <span class="prelude-ty">Result</span>&lt;JsValue, JsValue&gt;;
+	}
 }
 </code></pre></div></section></main></body></html>
