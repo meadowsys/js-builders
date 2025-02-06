@@ -66,25 +66,12 @@
 <a href="#65" id="65">65</a>
 <a href="#66" id="66">66</a>
 <a href="#67" id="67">67</a>
-<a href="#68" id="68">68</a>
-<a href="#69" id="69">69</a>
-<a href="#70" id="70">70</a>
-<a href="#71" id="71">71</a>
-<a href="#72" id="72">72</a>
-<a href="#73" id="73">73</a>
-<a href="#74" id="74">74</a>
-<a href="#75" id="75">75</a>
-<a href="#76" id="76">76</a>
-<a href="#77" id="77">77</a>
-<a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a>
-<a href="#80" id="80">80</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.ownKeys()` and supporting elements
+<a href="#68" id="68">68</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.ownKeys()` and supporting elements
 
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">super</span>::raw;
 
-<span class="comment">// - todo builder struct (with repr(transparent), `inner`, `__marker`)
-</span><span class="attr">#[repr(transparent)]
+<span class="attr">#[repr(transparent)]
 </span><span class="kw">pub struct </span>Builder&lt;<span class="lifetime">'h</span>, S&gt;
 <span class="kw">where
 	</span>S: State
@@ -93,14 +80,11 @@
 	__marker: PhantomDataInvariant&lt;S&gt;
 }
 
-<span class="comment">// - todo builder inner struct
-</span><span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
+<span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
 	target: ObjectSlot&lt;<span class="lifetime">'h</span>&gt;
 }
 
-<span class="comment">// - todo `gen_state!` invocation (generates state trait, state
-//   container struct, uninit type def, impl state for statecontainer)
-</span><span class="macro">gen_state!</span> {
+<span class="macro">gen_state!</span> {
 	State
 	StateContainer
 	StateUninit
@@ -109,8 +93,7 @@
 	TargetInit
 }
 
-<span class="comment">// - todo impl builder uninit
-</span><span class="kw">impl </span>Builder&lt;<span class="lifetime">'static</span>, StateUninit&gt; {
+<span class="kw">impl </span>Builder&lt;<span class="lifetime">'static</span>, StateUninit&gt; {
 	<span class="attr">#[inline]
 	</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
@@ -122,9 +105,7 @@
 	}
 }
 
-<span class="comment">// - todo impl blocks for finished ones with `execute` or `build` fns
-//   Reflect.ownKeys(target)
-</span><span class="kw">impl</span>&lt;
+<span class="kw">impl</span>&lt;
 	<span class="lifetime">'h</span>,
 	Target: SlotUnchecked&lt;ObjectSlot&lt;<span class="lifetime">'h</span>&gt;&gt;
 &gt; Builder&lt;<span class="lifetime">'h</span>, StateContainer&lt;
@@ -147,15 +128,10 @@
 	}
 }
 
-<span class="comment">// - todo impl block for builder fns, `change_state`, internal functions etc
-</span><span class="kw">impl</span>&lt;<span class="lifetime">'h</span>, S&gt; Builder&lt;<span class="lifetime">'h</span>, S&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'h</span>, S&gt; Builder&lt;<span class="lifetime">'h</span>, S&gt;
 <span class="kw">where
 	</span>S: State
 {
 	<span class="macro">gen_change_state!</span>(<span class="lifetime">'h</span>);
 }
-
-<span class="comment">// - todo target slot union definitions (will want `uninit`, likely will
-//   want `any`, and whatever other incompatible types in there), and
-//   associated impls (`Slot` and `SlotUnchecked` impls etc)
-</span></code></pre></div></section></main></body></html>
+</code></pre></div></section></main></body></html>
