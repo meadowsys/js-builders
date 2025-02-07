@@ -177,10 +177,10 @@
 	Init&lt;PropertyKey&gt;,
 	Uninit
 &gt;&gt; {
-	<span class="doccomment">/// Executes `Reflect.get(target, propertyKey)`
+	<span class="doccomment">/// Calls the function `Reflect.get(target, propertyKey)`
 	</span><span class="comment">// todo better return type
 	</span><span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>execute(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ExternAny, ExternAny&gt; {
+	</span><span class="kw">pub fn </span>call_fn(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ExternAny, ExternAny&gt; {
 		<span class="kw">unsafe </span>{
 			<span class="macro">read_slots!</span> {
 				<span class="self">self
@@ -205,10 +205,10 @@
 	Init&lt;PropertyKey&gt;,
 	Init&lt;Receiver&gt;
 &gt;&gt; {
-	<span class="doccomment">/// Executes `Reflect.get(target, propertyKey, receiver)`
+	<span class="doccomment">/// Calls the function `Reflect.get(target, propertyKey, receiver)`
 	</span><span class="comment">// todo better return type
 	</span><span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>execute(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ExternAny, ExternAny&gt; {
+	</span><span class="kw">pub fn </span>call_fn(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ExternAny, ExternAny&gt; {
 		<span class="kw">unsafe </span>{
 			<span class="macro">read_slots!</span> {
 				<span class="self">self

@@ -414,11 +414,11 @@
 	Init&lt;Value&gt;,
 	Uninit
 &gt;&gt; {
-	<span class="doccomment">/// Executes `Reflect.set(target, propertyKey, value)`
+	<span class="doccomment">/// Calls the function `Reflect.set(target, propertyKey, value)`
 	</span><span class="comment">// todo make the return types better
 	// returns boolean
 	</span><span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>execute(<span class="self">self</span>) -&gt; ExternAny {
+	</span><span class="kw">pub fn </span>call_fn(<span class="self">self</span>) -&gt; ExternAny {
 		<span class="kw">unsafe </span>{
 			<span class="macro">read_slots!</span> {
 				<span class="self">self
@@ -449,11 +449,11 @@
 	Init&lt;Value&gt;,
 	Init&lt;Receiver&gt;
 &gt;&gt; {
-	<span class="doccomment">/// Executes `Reflect.set(target, propertyKey, value, receiver)`
+	<span class="doccomment">/// Calls the function `Reflect.set(target, propertyKey, value, receiver)`
 	</span><span class="comment">// todo make the return types better
 	// returns boolean
 	</span><span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>execute(<span class="self">self</span>) -&gt; ExternAny {
+	</span><span class="kw">pub fn </span>call_fn(<span class="self">self</span>) -&gt; ExternAny {
 		<span class="kw">unsafe </span>{
 			<span class="macro">read_slots!</span> {
 				<span class="self">self

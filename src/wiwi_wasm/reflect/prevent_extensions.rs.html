@@ -139,9 +139,9 @@
 	Init&lt;Target&gt;
 &gt;&gt; {
 	<span class="attr">#[inline]
-	</span><span class="doccomment">/// Executes `Reflect.preventExtensions(target)`
+	</span><span class="doccomment">/// Calls the function `Reflect.preventExtensions(target)`
 	</span><span class="comment">// todo return boolean
-	</span><span class="kw">pub fn </span>execute(<span class="self">self</span>) -&gt; ExternAny {
+	</span><span class="kw">pub fn </span>call_fn(<span class="self">self</span>) -&gt; ExternAny {
 		<span class="kw">unsafe </span>{
 			<span class="macro">read_slots!</span> {
 				<span class="self">self

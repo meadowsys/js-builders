@@ -151,10 +151,10 @@
 	Init&lt;ThisArgument&gt;,
 	Init&lt;ArgumentsList&gt;
 &gt;&gt; {
-	<span class="doccomment">/// Executes `Reflect.apply(target, thisArgument, argumentsList)`
+	<span class="doccomment">/// Calls `Reflect.apply(target, thisArgument, argumentsList)`
 	</span><span class="comment">// todo make the return types better
 	</span><span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>execute(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ExternAny, ExternAny&gt; {
+	</span><span class="kw">pub fn </span>call_fn(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ExternAny, ExternAny&gt; {
 		<span class="kw">unsafe </span>{
 			<span class="macro">read_slots!</span> {
 				<span class="self">self
