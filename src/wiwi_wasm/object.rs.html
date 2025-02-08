@@ -130,7 +130,7 @@
 	<span class="attr">#[inline]
 	</span><span class="kw">pub unsafe fn </span>from_any_ref_unchecked(value: <span class="kw-2">&amp;</span>ExternAny) -&gt; <span class="kw-2">&amp;</span><span class="self">Self </span>{
 		<span class="comment">// SAFETY: ExternObject is repr(transparent) over ExternAny
-		</span><span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>(<span class="kw-2">&amp;</span>raw <span class="kw">const </span>value <span class="kw">as </span><span class="kw-2">*const </span>ExternObject) }
+		</span><span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>(<span class="kw-2">&amp;</span>raw <span class="kw">const </span><span class="kw-2">*</span>value).cast::&lt;ExternObject&gt;() }
 	}
 
 	<span class="attr">#[inline]
