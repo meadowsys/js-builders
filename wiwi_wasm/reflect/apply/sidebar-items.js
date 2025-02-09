@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Builder","StateContainer"],"trait":["State"],"type":["StateUninit"],"union":["ArgumentsListSlot","ThisArgumentSlot"]};
+window.SIDEBAR_ITEMS = {"struct":["Builder","StateContainer"],"trait":["State"],"type":["StateUninit"],"union":["ArgumentsListSlot","TargetSlot","ThisArgumentSlot"]};

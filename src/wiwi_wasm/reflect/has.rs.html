@@ -101,7 +101,21 @@
 <a href="#100" id="100">100</a>
 <a href="#101" id="101">101</a>
 <a href="#102" id="102">102</a>
-<a href="#103" id="103">103</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.has()` and supporting elements
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.has()` and supporting elements
 
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">super</span>::raw;
@@ -116,7 +130,7 @@
 }
 
 <span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
-	target: ObjectSlot&lt;<span class="lifetime">'h</span>&gt;,
+	target: TargetSlot&lt;<span class="lifetime">'h</span>&gt;,
 	property_key: PropertyKeySlot&lt;<span class="lifetime">'h</span>&gt;
 }
 
@@ -137,7 +151,7 @@
 	</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			inner: BuilderInner {
-				target: ObjectSlot::uninit(),
+				target: TargetSlot::uninit(),
 				property_key: PropertyKeySlot { uninit: () }
 			},
 			__marker: PhantomData
@@ -147,7 +161,7 @@
 
 <span class="kw">impl</span>&lt;
 	<span class="lifetime">'h</span>,
-	Target: SlotUnchecked&lt;ObjectSlot&lt;<span class="lifetime">'h</span>&gt;&gt;,
+	Target: SlotUnchecked&lt;TargetSlot&lt;<span class="lifetime">'h</span>&gt;&gt;,
 	PropertyKey: SlotUnchecked&lt;PropertyKeySlot&lt;<span class="lifetime">'h</span>&gt;&gt;
 &gt; Builder&lt;<span class="lifetime">'h</span>, StateContainer&lt;
 	Init&lt;Target&gt;,
@@ -175,28 +189,42 @@
 <span class="kw">where
 	</span>S: State
 {
-	<span class="macro">gen_change_state!</span>(<span class="lifetime">'h</span>);
+	<span class="macro">gen_change_state!</span>();
 
 	<span class="macro">gen_builder_fn!</span> {
-		<span class="lifetime">'h
-
-		</span>Target
+		Target
 		TargetInit
-		ObjectSlot
+		TargetSlot
 
 		target
 		target_unchecked
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
-		<span class="lifetime">'h
-
-		</span>PropertyKey
+		PropertyKey
 		PropertyKeyInit
 		PropertyKeySlot
 
 		property_key
 		property_key_unchecked
+	}
+}
+
+<span class="macro">gen_slot!</span> {
+	TargetSlot
+	field any { <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny }
+
+	<span class="kw">impl for </span>{ <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternObject } {
+		result { <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny }
+		write(<span class="self">self</span>, slot) {
+			<span class="kw-2">*</span>slot = TargetSlot { any: <span class="self">self </span>}
+		}
+		read(slot) {
+			<span class="kw">unsafe </span>{ slot.any }
+		}
+		as_ref(result) {
+			result
+		}
 	}
 }
 

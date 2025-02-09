@@ -78,7 +78,23 @@
 <a href="#77" id="77">77</a>
 <a href="#78" id="78">78</a>
 <a href="#79" id="79">79</a>
-<a href="#80" id="80">80</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.preventExtensions()` and supporting elements
+<a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
+<a href="#90" id="90">90</a>
+<a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.preventExtensions()` and supporting elements
 
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">super</span>::raw;
@@ -93,7 +109,7 @@
 }
 
 <span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
-	target: ObjectSlot&lt;<span class="lifetime">'h</span>&gt;
+	target: TargetSlot&lt;<span class="lifetime">'h</span>&gt;
 }
 
 <span class="macro">gen_state!</span> {
@@ -110,7 +126,7 @@
 	</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			inner: BuilderInner {
-				target: ObjectSlot::uninit()
+				target: TargetSlot::uninit()
 			},
 			__marker: PhantomData
 		}
@@ -119,7 +135,7 @@
 
 <span class="kw">impl</span>&lt;
 	<span class="lifetime">'h</span>,
-	Target: SlotUnchecked&lt;ObjectSlot&lt;<span class="lifetime">'h</span>&gt;&gt;
+	Target: SlotUnchecked&lt;TargetSlot&lt;<span class="lifetime">'h</span>&gt;&gt;
 &gt; Builder&lt;<span class="lifetime">'h</span>, StateContainer&lt;
 	Init&lt;Target&gt;
 &gt;&gt; {
@@ -145,17 +161,33 @@
 <span class="kw">where
 	</span>S: State
 {
-	<span class="macro">gen_change_state!</span>(<span class="lifetime">'h</span>);
+	<span class="macro">gen_change_state!</span>();
 
 	<span class="macro">gen_builder_fn!</span> {
-		<span class="lifetime">'h
-
-		</span>Target
+		Target
 		TargetInit
-		ObjectSlot
+		TargetSlot
 
 		target
 		target_unchecked
+	}
+}
+
+<span class="macro">gen_slot!</span> {
+	TargetSlot
+	field any { <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny }
+
+	<span class="kw">impl for </span>{ <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternObject } {
+		result { <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny }
+		write(<span class="self">self</span>, slot) {
+			<span class="kw-2">*</span>slot = TargetSlot { any: <span class="self">self </span>}
+		}
+		read(slot) {
+			<span class="kw">unsafe </span>{ slot.any }
+		}
+		as_ref(result) {
+			result
+		}
 	}
 }
 </code></pre></div></section></main></body></html>

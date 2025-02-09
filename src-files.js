@@ -1,3 +1,3 @@
-var srcIndex = new Map(JSON.parse('[["wiwi_wasm",["",[["reflect",[],["apply.rs","construct.rs","define_property.rs","delete_property.rs","get.rs","get_own_property_descriptor.rs","get_prototype_of.rs","has.rs","is_extensible.rs","own_keys.rs","prevent_extensions.rs","set.rs","set_prototype_of.rs"]]],["any.rs","bigint.rs","boolean.rs","extern_crates.rs","lib.rs","number.rs","object.rs","reflect.rs","slot.rs","string.rs","symbol.rs","util.rs"]]]]'));
+var srcIndex = new Map(JSON.parse('[["wiwi_wasm",["",[["reflect",[],["apply.rs","construct.rs","define_property.rs","delete_property.rs","get.rs","get_own_property_descriptor.rs","get_prototype_of.rs","has.rs","is_extensible.rs","own_keys.rs","prevent_extensions.rs","set.rs","set_prototype_of.rs"]]],["any.rs","bigint.rs","boolean.rs","extern_crates.rs","lib.rs","number.rs","object.rs","reflect.rs","string.rs","symbol.rs","util.rs"]]]]'));
 createSrcSidebar();
-//{"start":36,"fragment_lengths":[411]}
+//{"start":36,"fragment_lengths":[401]}
