@@ -617,7 +617,28 @@
 <a href="#616" id="616">616</a>
 <a href="#617" id="617">617</a>
 <a href="#618" id="618">618</a>
-<a href="#619" id="619">619</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
+<a href="#627" id="627">627</a>
+<a href="#628" id="628">628</a>
+<a href="#629" id="629">629</a>
+<a href="#630" id="630">630</a>
+<a href="#631" id="631">631</a>
+<a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
+<a href="#636" id="636">636</a>
+<a href="#637" id="637">637</a>
+<a href="#638" id="638">638</a>
+<a href="#639" id="639">639</a>
+<a href="#640" id="640">640</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
 
 </span><span class="comment">// Checklist™
 // - use statements
@@ -820,33 +841,52 @@
 <span class="macro">macro_rules!</span> gen_builder {
 	{
 		$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>:meta]</span>)*
-		$(<span class="macro-nonterminal">$field</span>:ident: <span class="macro-nonterminal">$slot</span>:ident)*
+		<span class="macro-nonterminal">$name</span>:ident
+		deref(<span class="macro-nonterminal">$value</span>:ident) -&gt; <span class="macro-nonterminal">$deref</span>:ty {
+			$(<span class="macro-nonterminal">$deref_impl</span>:tt)*
+		}
+
+		$(<span class="macro-nonterminal">$field</span>:ident: <span class="macro-nonterminal">$slot</span>:ident;)*
 	} =&gt; {
 		<span class="attr">#[repr(transparent)]
 		</span>$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>]</span>)*
-		<span class="kw">pub struct </span>Builder&lt;<span class="lifetime">'h</span>, S&gt;
+		<span class="kw">pub struct </span><span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h</span>, S&gt;
 		<span class="kw">where
 			</span>S: State
 		{
-			inner: BuilderInner&lt;<span class="lifetime">'h</span>&gt;,
+			inner: Inner&lt;<span class="lifetime">'h</span>&gt;,
 			__marker: PhantomDataInvariant&lt;S&gt;
 		}
 
-		<span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
+		<span class="kw">struct </span>Inner&lt;<span class="lifetime">'h</span>&gt; {
+			__deref: core::cell::UnsafeCell&lt;<span class="prelude-ty">Option</span>&lt;<span class="macro-nonterminal">$deref</span>&gt;&gt;,
 			$(<span class="macro-nonterminal">$field</span>: <span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;),*
 		}
 
-		<span class="kw">impl </span>Builder&lt;<span class="lifetime">'static</span>, StateUninit&gt; {
+		<span class="kw">impl </span><span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'static</span>, StateUninit&gt; {
 			<span class="attr">#[inline(always)]
 			</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 				<span class="self">Self </span>{
-					inner: BuilderInner {
+					inner: Inner {
+						__deref: core::cell::UnsafeCell::new(<span class="prelude-val">None</span>),
 						$(<span class="macro-nonterminal">$field</span>: <span class="macro-nonterminal">$slot </span>{ uninit: () }),*
 						<span class="comment">// todo when all slots have been converted to use the macro, use this
 						// $($field: $slot::uninit()),*
 					</span>},
 					__marker: PhantomData
 				}
+			}
+		}
+
+		<span class="kw">impl</span>&lt;<span class="lifetime">'h</span>, S&gt; Deref <span class="kw">for </span><span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h</span>, S&gt;
+		<span class="kw">where
+			</span>S: State
+		{
+			<span class="kw">type </span>Target = <span class="macro-nonterminal">$deref</span>;
+			<span class="attr">#[inline(always)]
+			</span><span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="macro-nonterminal">$deref </span>{
+				<span class="kw">let </span><span class="macro-nonterminal">$value </span>= <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span><span class="self">self</span>.inner.__deref.get() };
+				$(<span class="macro-nonterminal">$deref_impl</span>)*
 			}
 		}
 	}
@@ -998,15 +1038,15 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_state;
 
 <span class="macro">macro_rules!</span> gen_change_state {
-	() =&gt; {
+	(<span class="macro-nonterminal">$name</span>:ident) =&gt; {
 		<span class="attr">#[inline(always)]
-		</span><span class="kw">unsafe fn </span>change_state&lt;<span class="lifetime">'h2</span>, S2, F&gt;(<span class="self">self</span>, f: F) -&gt; Builder&lt;<span class="lifetime">'h2</span>, S2&gt;
+		</span><span class="kw">unsafe fn </span>change_state&lt;<span class="lifetime">'h2</span>, S2, F&gt;(<span class="self">self</span>, f: F) -&gt; <span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h2</span>, S2&gt;
 		<span class="kw">where
 			</span><span class="lifetime">'h</span>: <span class="lifetime">'h2</span>,
 			S2: State,
-			F: FnOnce(<span class="kw-2">&amp;mut </span>Builder&lt;<span class="lifetime">'h2</span>, S2&gt;)
+			F: FnOnce(<span class="kw-2">&amp;mut </span><span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h2</span>, S2&gt;)
 		{
-			<span class="kw">let </span><span class="kw-2">mut </span>changed = Builder {
+			<span class="kw">let </span><span class="kw-2">mut </span>changed = <span class="macro-nonterminal">$name </span>{
 				inner: <span class="self">self</span>.inner,
 				__marker: PhantomData
 			};
@@ -1020,6 +1060,8 @@
 
 <span class="macro">macro_rules!</span> gen_builder_fn {
 	{
+		<span class="macro-nonterminal">$name</span>:ident
+
 		<span class="macro-nonterminal">$field_state</span>:ident
 		<span class="macro-nonterminal">$field_state_init</span>:ident
 		<span class="macro-nonterminal">$slot</span>:ident
@@ -1035,7 +1077,7 @@
 		<span class="kw">pub fn </span><span class="macro-nonterminal">$field</span>&lt;<span class="lifetime">'h2</span>, T&gt;(
 			<span class="self">self</span>,
 			<span class="macro-nonterminal">$field</span>: T
-		) -&gt; Builder&lt;<span class="lifetime">'h2</span>, S::<span class="macro-nonterminal">$field_state_init</span>&lt;T&gt;&gt;
+		) -&gt; <span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h2</span>, S::<span class="macro-nonterminal">$field_state_init</span>&lt;T&gt;&gt;
 		<span class="kw">where
 			</span><span class="lifetime">'h</span>: <span class="lifetime">'h2</span>,
 			S::<span class="macro-nonterminal">$field_state</span>: IsUninit,
@@ -1064,7 +1106,7 @@
 		<span class="kw">pub unsafe fn </span><span class="macro-nonterminal">$fn_name_unchecked</span>&lt;<span class="lifetime">'h2</span>, T&gt;(
 			<span class="self">self</span>,
 			<span class="macro-nonterminal">$field</span>: T
-		) -&gt; Builder&lt;<span class="lifetime">'h2</span>, S::<span class="macro-nonterminal">$field_state_init</span>&lt;T&gt;&gt;
+		) -&gt; <span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h2</span>, S::<span class="macro-nonterminal">$field_state_init</span>&lt;T&gt;&gt;
 		<span class="kw">where
 			</span><span class="lifetime">'h</span>: <span class="lifetime">'h2</span>,
 			S::<span class="macro-nonterminal">$field_state</span>: IsUninit,

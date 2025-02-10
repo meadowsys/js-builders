@@ -93,7 +93,9 @@
 <a href="#92" id="92">92</a>
 <a href="#93" id="93">93</a>
 <a href="#94" id="94">94</a>
-<a href="#95" id="95">95</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.isExtensible()` and supporting elements
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.isExtensible()` and supporting elements
 
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">super</span>::raw;
@@ -103,11 +105,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	inner: BuilderInner&lt;<span class="lifetime">'h</span>&gt;,
+	inner: Inner&lt;<span class="lifetime">'h</span>&gt;,
 	__marker: PhantomDataInvariant&lt;S&gt;
 }
 
-<span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
+<span class="kw">struct </span>Inner&lt;<span class="lifetime">'h</span>&gt; {
 	target: TargetSlot&lt;<span class="lifetime">'h</span>&gt;
 }
 
@@ -124,7 +126,7 @@
 	<span class="attr">#[inline]
 	</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			inner: BuilderInner {
+			inner: Inner {
 				target: TargetSlot::uninit()
 			},
 			__marker: PhantomData
@@ -159,9 +161,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	<span class="macro">gen_change_state!</span>();
+	<span class="macro">gen_change_state!</span>(Builder);
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		Target
 		TargetInit
 		TargetSlot

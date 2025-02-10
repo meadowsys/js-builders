@@ -115,7 +115,11 @@
 <a href="#114" id="114">114</a>
 <a href="#115" id="115">115</a>
 <a href="#116" id="116">116</a>
-<a href="#117" id="117">117</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.has()` and supporting elements
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.has()` and supporting elements
 
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">super</span>::raw;
@@ -125,11 +129,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	inner: BuilderInner&lt;<span class="lifetime">'h</span>&gt;,
+	inner: Inner&lt;<span class="lifetime">'h</span>&gt;,
 	__marker: PhantomDataInvariant&lt;S&gt;
 }
 
-<span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
+<span class="kw">struct </span>Inner&lt;<span class="lifetime">'h</span>&gt; {
 	target: TargetSlot&lt;<span class="lifetime">'h</span>&gt;,
 	property_key: PropertyKeySlot&lt;<span class="lifetime">'h</span>&gt;
 }
@@ -150,7 +154,7 @@
 	<span class="attr">#[inline]
 	</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			inner: BuilderInner {
+			inner: Inner {
 				target: TargetSlot::uninit(),
 				property_key: PropertyKeySlot { uninit: () }
 			},
@@ -189,9 +193,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	<span class="macro">gen_change_state!</span>();
+	<span class="macro">gen_change_state!</span>(Builder);
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		Target
 		TargetInit
 		TargetSlot
@@ -201,6 +207,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		PropertyKey
 		PropertyKeyInit
 		PropertyKeySlot

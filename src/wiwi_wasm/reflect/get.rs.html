@@ -164,7 +164,13 @@
 <a href="#163" id="163">163</a>
 <a href="#164" id="164">164</a>
 <a href="#165" id="165">165</a>
-<a href="#166" id="166">166</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.get()` and supporting elements
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.get()` and supporting elements
 
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">super</span>::raw;
@@ -174,11 +180,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	inner: BuilderInner&lt;<span class="lifetime">'h</span>&gt;,
+	inner: Inner&lt;<span class="lifetime">'h</span>&gt;,
 	__marker: PhantomDataInvariant&lt;S&gt;
 }
 
-<span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
+<span class="kw">struct </span>Inner&lt;<span class="lifetime">'h</span>&gt; {
 	target: TargetSlot&lt;<span class="lifetime">'h</span>&gt;,
 	property_key: PropertyKeySlot&lt;<span class="lifetime">'h</span>&gt;,
 	receiver: ReceiverSlot&lt;<span class="lifetime">'h</span>&gt;
@@ -203,7 +209,7 @@
 	<span class="attr">#[inline]
 	</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			inner: BuilderInner {
+			inner: Inner {
 				target: TargetSlot::uninit(),
 				property_key: PropertyKeySlot { uninit: () },
 				receiver: ReceiverSlot { uninit: () }
@@ -273,9 +279,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	<span class="macro">gen_change_state!</span>();
+	<span class="macro">gen_change_state!</span>(Builder);
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		Target
 		TargetInit
 		TargetSlot
@@ -285,6 +293,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		PropertyKey
 		PropertyKeyInit
 		PropertyKeySlot
@@ -294,6 +304,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		Receiver
 		ReceiverInit
 		ReceiverSlot

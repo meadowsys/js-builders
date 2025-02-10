@@ -323,9 +323,37 @@
 <a href="#322" id="322">322</a>
 <a href="#323" id="323">323</a>
 <a href="#324" id="324">324</a>
-<a href="#325" id="325">325</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 
-<span class="kw">pub mod </span>apply;
+<span class="comment">// pub use apply::
+// pub use construct::
+// pub use define_property::
+// pub use delete_property::
+// pub use get::
+// pub use get_own_property_descriptor::
+// pub use get_prototype_of::
+// pub use has::
+// pub use is_extensible::
+// pub use own_keys::
+// pub use prevent_extensions::
+</span><span class="kw">pub use </span>set::ExternReflectSet;
+<span class="comment">// pub use set_prototype_of::
+
+</span><span class="kw">pub mod </span>apply;
 <span class="kw">pub mod </span>construct;
 <span class="kw">pub mod </span>define_property;
 <span class="kw">pub mod </span>delete_property;
@@ -452,8 +480,8 @@
 	///
 	/// [MDN docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/set)
 	</span><span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; set::Builder&lt;<span class="lifetime">'static</span>, set::StateUninit&gt; {
-		set::Builder::new()
+	</span><span class="kw">pub fn </span>set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ExternReflectSet&lt;<span class="lifetime">'static</span>, set::StateUninit&gt; {
+		ExternReflectSet::new()
 	}
 
 	<span class="doccomment">/// Create builder for `Reflect.setPrototypeOf()`

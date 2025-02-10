@@ -177,7 +177,13 @@
 <a href="#176" id="176">176</a>
 <a href="#177" id="177">177</a>
 <a href="#178" id="178">178</a>
-<a href="#179" id="179">179</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.construct()` and supporting elements
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.construct()` and supporting elements
 
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">super</span>::raw;
@@ -187,11 +193,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	inner: BuilderInner&lt;<span class="lifetime">'h</span>&gt;,
+	inner: Inner&lt;<span class="lifetime">'h</span>&gt;,
 	__marker: PhantomDataInvariant&lt;S&gt;
 }
 
-<span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
+<span class="kw">struct </span>Inner&lt;<span class="lifetime">'h</span>&gt; {
 	target: TargetSlot&lt;<span class="lifetime">'h</span>&gt;,
 	arguments_list: ArgumentsListSlot&lt;<span class="lifetime">'h</span>&gt;,
 	new_target: NewTargetSlot&lt;<span class="lifetime">'h</span>&gt;
@@ -216,7 +222,7 @@
 	<span class="attr">#[inline]
 	</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			inner: BuilderInner {
+			inner: Inner {
 				target: TargetSlot::uninit(),
 				arguments_list: ArgumentsListSlot { uninit: () },
 				new_target: NewTargetSlot::uninit()
@@ -286,9 +292,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	<span class="macro">gen_change_state!</span>();
+	<span class="macro">gen_change_state!</span>(Builder);
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		Target
 		TargetInit
 		TargetSlot
@@ -298,6 +306,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		ArgumentsList
 		ArgumentsListInit
 		ArgumentsListSlot
@@ -307,6 +317,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		NewTarget
 		NewTargetInit
 		NewTargetSlot

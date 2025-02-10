@@ -275,16 +275,34 @@
 <a href="#274" id="274">274</a>
 <a href="#275" id="275">275</a>
 <a href="#276" id="276">276</a>
-<a href="#277" id="277">277</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.set()` and supporting elements
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.set()` and supporting elements
 
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">super</span>::raw;
 
 <span class="macro">gen_builder!</span> {
-	target: TargetSlot
-	property_key: PropertyKeySlot
-	value: ValueSlot
-	receiver: ReceiverSlot
+	ExternReflectSet
+	deref(value) -&gt; () {
+		value.get_or_insert_with(|| ())
+	}
+
+	target: TargetSlot;
+	property_key: PropertyKeySlot;
+	value: ValueSlot;
+	receiver: ReceiverSlot;
 }
 
 <span class="macro">gen_state!</span> {
@@ -310,7 +328,7 @@
 	Target: SlotUnchecked&lt;TargetSlot&lt;<span class="lifetime">'h</span>&gt;&gt;,
 	PropertyKey: SlotUnchecked&lt;PropertyKeySlot&lt;<span class="lifetime">'h</span>&gt;&gt;,
 	Value: SlotUnchecked&lt;ValueSlot&lt;<span class="lifetime">'h</span>&gt;&gt;
-&gt; Builder&lt;<span class="lifetime">'h</span>, StateContainer&lt;
+&gt; ExternReflectSet&lt;<span class="lifetime">'h</span>, StateContainer&lt;
 	Init&lt;Target&gt;,
 	Init&lt;PropertyKey&gt;,
 	Init&lt;Value&gt;,
@@ -345,7 +363,7 @@
 	PropertyKey: SlotUnchecked&lt;PropertyKeySlot&lt;<span class="lifetime">'h</span>&gt;&gt;,
 	Value: SlotUnchecked&lt;ValueSlot&lt;<span class="lifetime">'h</span>&gt;&gt;,
 	Receiver: SlotUnchecked&lt;ReceiverSlot&lt;<span class="lifetime">'h</span>&gt;&gt;
-&gt; Builder&lt;<span class="lifetime">'h</span>, StateContainer&lt;
+&gt; ExternReflectSet&lt;<span class="lifetime">'h</span>, StateContainer&lt;
 	Init&lt;Target&gt;,
 	Init&lt;PropertyKey&gt;,
 	Init&lt;Value&gt;,
@@ -376,13 +394,15 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'h</span>, S&gt; Builder&lt;<span class="lifetime">'h</span>, S&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'h</span>, S&gt; ExternReflectSet&lt;<span class="lifetime">'h</span>, S&gt;
 <span class="kw">where
 	</span>S: State
 {
-	<span class="macro">gen_change_state!</span>();
+	<span class="macro">gen_change_state!</span>(ExternReflectSet);
 
 	<span class="macro">gen_builder_fn!</span> {
+		ExternReflectSet
+
 		Target
 		TargetInit
 		TargetSlot
@@ -392,6 +412,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		ExternReflectSet
+
 		PropertyKey
 		PropertyKeyInit
 		PropertyKeySlot
@@ -401,6 +423,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		ExternReflectSet
+
 		Value
 		ValueInit
 		ValueSlot
@@ -410,6 +434,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		ExternReflectSet
+
 		Receiver
 		ReceiverInit
 		ReceiverSlot

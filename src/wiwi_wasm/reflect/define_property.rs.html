@@ -137,7 +137,13 @@
 <a href="#136" id="136">136</a>
 <a href="#137" id="137">137</a>
 <a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.defineProperty()` and supporting elements
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a></pre></div><pre class="rust"><code><span class="doccomment">//! Builder for `Reflect.defineProperty()` and supporting elements
 
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">super</span>::raw;
@@ -147,11 +153,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	inner: BuilderInner&lt;<span class="lifetime">'h</span>&gt;,
+	inner: Inner&lt;<span class="lifetime">'h</span>&gt;,
 	__marker: PhantomDataInvariant&lt;S&gt;
 }
 
-<span class="kw">struct </span>BuilderInner&lt;<span class="lifetime">'h</span>&gt; {
+<span class="kw">struct </span>Inner&lt;<span class="lifetime">'h</span>&gt; {
 	target: TargetSlot&lt;<span class="lifetime">'h</span>&gt;,
 	property_key: PropertyKeySlot&lt;<span class="lifetime">'h</span>&gt;,
 	attributes: AttributesSlot&lt;<span class="lifetime">'h</span>&gt;
@@ -176,7 +182,7 @@
 	<span class="attr">#[inline]
 	</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			inner: BuilderInner {
+			inner: Inner {
 				target: TargetSlot::uninit(),
 				property_key: PropertyKeySlot { uninit: () },
 				attributes: AttributesSlot { uninit: () }
@@ -219,9 +225,11 @@
 <span class="kw">where
 	</span>S: State
 {
-	<span class="macro">gen_change_state!</span>();
+	<span class="macro">gen_change_state!</span>(Builder);
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		Target
 		TargetInit
 		TargetSlot
@@ -231,6 +239,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		PropertyKey
 		PropertyKeyInit
 		PropertyKeySlot
@@ -240,6 +250,8 @@
 	}
 
 	<span class="macro">gen_builder_fn!</span> {
+		Builder
+
 		Attributes
 		AttributesInit
 		AttributesSlot
