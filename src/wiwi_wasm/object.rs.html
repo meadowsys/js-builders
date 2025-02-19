@@ -71,81 +71,64 @@
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
-<a href="#73" id="73">73</a>
-<a href="#74" id="74">74</a>
-<a href="#75" id="75">75</a>
-<a href="#76" id="76">76</a>
-<a href="#77" id="77">77</a>
-<a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a>
-<a href="#80" id="80">80</a>
-<a href="#81" id="81">81</a>
-<a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
-<a href="#85" id="85">85</a>
-<a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a>
-<a href="#88" id="88">88</a>
-<a href="#89" id="89">89</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
+<a href="#73" id="73">73</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 
-<span class="attr">#[inline]
-</span><span class="kw">pub fn </span>object() -&gt; ExternObjectNs {
-	<span class="kw">let </span>inner = raw::OBJECT.with(Clone::clone);
-	<span class="kw">let </span>inner = ExternAny::from_js_value(inner);
-	<span class="kw">let </span>inner = <span class="kw">unsafe </span>{ ExternObject::from_any_unchecked(inner) };
-	ExternObjectNs { inner }
+<span class="macro">gen_struct!</span> {
+	<span class="kw">struct </span>ExternObject;
+
+	deref ExternAny;
+	deref_value {
+		<span class="kw">let </span>value = raw::OBJECT.with(Clone::clone);
+		ExternAny::from_js_value(value)
+	};
+
+	field value: ValueSlot;
 }
 
-<span class="doccomment">/// Global `Object` namespace
-</span><span class="attr">#[repr(transparent)]
-</span><span class="kw">pub struct </span>ExternObjectNs {
-	inner: ExternObject
+<span class="macro">gen_state!</span> {
+	field Value;
+	init ValueInit;
 }
 
-<span class="kw">impl </span>ExternObjectNs {
-	<span class="attr">#[expect(
-		clippy::new_ret_no_self,
-		clippy::wrong_self_convention,
-		reason = <span class="string">"shut"
-	</span>)]
-	#[inline]
-	</span><span class="kw">pub fn </span>new(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ExternObject {
-		<span class="kw">unsafe </span>{ ExternObject::from_any_unchecked(ExternAny::from_js_value(raw::new_object())) }
-	}
+<span class="macro">gen_slot!</span> {
+	slot ValueSlot;
 }
 
-<span class="doccomment">/// `object` type
-</span><span class="attr">#[repr(transparent)]
-</span><span class="kw">pub struct </span>ExternObject {
-	inner: ExternAny
+<span class="macro">gen_builder_fns!</span> {
+	<span class="kw">struct </span>ExternObject;
+
+	state Value;
+	init ValueInit;
+	slot ValueSlot;
+
+	field value;
+
+	field_unchecked value_unchecked;
 }
 
-<span class="kw">impl </span>ExternObject {
-	<span class="attr">#[inline]
-	</span><span class="kw">pub unsafe fn </span>from_any_unchecked(value: ExternAny) -&gt; <span class="self">Self </span>{
-		<span class="self">Self </span>{ inner: value }
-	}
+<span class="macro">gen_call_fn!</span> {
+	<span class="kw">struct </span>ExternObject;
+	raw_call {
+		<span class="kw">let _ </span>= value;
+		<span class="macro">todo!</span>()
+	};
+	<span class="kw">return </span><span class="prelude-ty">Result</span>&lt;ExternAny, ExternAny&gt;;
 
-	<span class="attr">#[inline]
-	</span><span class="kw">pub unsafe fn </span>from_any_ref_unchecked(value: <span class="kw-2">&amp;</span>ExternAny) -&gt; <span class="kw-2">&amp;</span><span class="self">Self </span>{
-		<span class="comment">// SAFETY: ExternObject is repr(transparent) over ExternAny
-		</span><span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>(<span class="kw-2">&amp;</span>raw <span class="kw">const </span><span class="kw-2">*</span>value).cast::&lt;ExternObject&gt;() }
-	}
-
-	<span class="attr">#[inline]
-	</span><span class="kw">fn </span>as_any(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ExternAny {
-		<span class="kw-2">&amp;</span><span class="self">self</span>.inner
-	}
+	field value;
+	state Value;
+	init Init&lt;ValueSlot&gt;;
 }
 
-<span class="kw">impl </span>Deref <span class="kw">for </span>ExternObject {
-	<span class="kw">type </span>Target = ExternAny;
+<span class="macro">gen_call_fn!</span> {
+	<span class="kw">struct </span>ExternObject;
+	raw_call {
+		<span class="macro">todo!</span>()
+	};
+	<span class="kw">return </span><span class="prelude-ty">Result</span>&lt;ExternAny, ExternAny&gt;;
 
-	<span class="attr">#[inline]
-	</span><span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ExternAny {
-		<span class="self">self</span>.as_any()
-	}
+	field value;
+	state Value;
+	init Uninit;
 }
 
 <span class="kw">mod </span>raw {
@@ -159,21 +142,6 @@
 			js_name = Object
 		)]
 		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">static </span>OBJECT: JsValue;
-
-		<span class="attr">#[wasm_bindgen(js_name = Object)]
-		</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>new_object() -&gt; JsValue;
-	}
-}
-
-<span class="attr">#[cfg(test)]
-</span><span class="kw">mod </span>tests {
-	<span class="kw">use super</span>::<span class="kw-2">*</span>;
-	<span class="kw">use </span><span class="kw">crate</span>::prelude_test::<span class="kw-2">*</span>;
-
-	<span class="comment">// todo remove me maybe?
-	</span><span class="attr">#[wasm_bindgen_test]
-	</span><span class="kw">fn </span>object_creation_doesnt_die() {
-		black_box(object().new());
 	}
 }
 </code></pre></div></section></main></body></html>

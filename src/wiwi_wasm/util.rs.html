@@ -638,7 +638,164 @@
 <a href="#637" id="637">637</a>
 <a href="#638" id="638">638</a>
 <a href="#639" id="639">639</a>
-<a href="#640" id="640">640</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
+<a href="#640" id="640">640</a>
+<a href="#641" id="641">641</a>
+<a href="#642" id="642">642</a>
+<a href="#643" id="643">643</a>
+<a href="#644" id="644">644</a>
+<a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
+<a href="#652" id="652">652</a>
+<a href="#653" id="653">653</a>
+<a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
+<a href="#657" id="657">657</a>
+<a href="#658" id="658">658</a>
+<a href="#659" id="659">659</a>
+<a href="#660" id="660">660</a>
+<a href="#661" id="661">661</a>
+<a href="#662" id="662">662</a>
+<a href="#663" id="663">663</a>
+<a href="#664" id="664">664</a>
+<a href="#665" id="665">665</a>
+<a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
+<a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
+<a href="#678" id="678">678</a>
+<a href="#679" id="679">679</a>
+<a href="#680" id="680">680</a>
+<a href="#681" id="681">681</a>
+<a href="#682" id="682">682</a>
+<a href="#683" id="683">683</a>
+<a href="#684" id="684">684</a>
+<a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
+<a href="#731" id="731">731</a>
+<a href="#732" id="732">732</a>
+<a href="#733" id="733">733</a>
+<a href="#734" id="734">734</a>
+<a href="#735" id="735">735</a>
+<a href="#736" id="736">736</a>
+<a href="#737" id="737">737</a>
+<a href="#738" id="738">738</a>
+<a href="#739" id="739">739</a>
+<a href="#740" id="740">740</a>
+<a href="#741" id="741">741</a>
+<a href="#742" id="742">742</a>
+<a href="#743" id="743">743</a>
+<a href="#744" id="744">744</a>
+<a href="#745" id="745">745</a>
+<a href="#746" id="746">746</a>
+<a href="#747" id="747">747</a>
+<a href="#748" id="748">748</a>
+<a href="#749" id="749">749</a>
+<a href="#750" id="750">750</a>
+<a href="#751" id="751">751</a>
+<a href="#752" id="752">752</a>
+<a href="#753" id="753">753</a>
+<a href="#754" id="754">754</a>
+<a href="#755" id="755">755</a>
+<a href="#756" id="756">756</a>
+<a href="#757" id="757">757</a>
+<a href="#758" id="758">758</a>
+<a href="#759" id="759">759</a>
+<a href="#760" id="760">760</a>
+<a href="#761" id="761">761</a>
+<a href="#762" id="762">762</a>
+<a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
+<a href="#767" id="767">767</a>
+<a href="#768" id="768">768</a>
+<a href="#769" id="769">769</a>
+<a href="#770" id="770">770</a>
+<a href="#771" id="771">771</a>
+<a href="#772" id="772">772</a>
+<a href="#773" id="773">773</a>
+<a href="#774" id="774">774</a>
+<a href="#775" id="775">775</a>
+<a href="#776" id="776">776</a>
+<a href="#777" id="777">777</a>
+<a href="#778" id="778">778</a>
+<a href="#779" id="779">779</a>
+<a href="#780" id="780">780</a>
+<a href="#781" id="781">781</a>
+<a href="#782" id="782">782</a>
+<a href="#783" id="783">783</a>
+<a href="#784" id="784">784</a>
+<a href="#785" id="785">785</a>
+<a href="#786" id="786">786</a>
+<a href="#787" id="787">787</a>
+<a href="#788" id="788">788</a>
+<a href="#789" id="789">789</a>
+<a href="#790" id="790">790</a>
+<a href="#791" id="791">791</a>
+<a href="#792" id="792">792</a>
+<a href="#793" id="793">793</a>
+<a href="#794" id="794">794</a>
+<a href="#795" id="795">795</a>
+<a href="#796" id="796">796</a>
+<a href="#797" id="797">797</a></pre></div><pre class="rust"><code><span class="doccomment">//! Common builder API utilities and stuffs
 
 </span><span class="comment">// Checklist™
 // - use statements
@@ -808,6 +965,21 @@
 	</span><span class="kw">fn </span>as_ref(result: <span class="kw-2">&amp;</span><span class="self">Self</span>::Result) -&gt; <span class="kw-2">&amp;</span><span class="kw">crate</span>::ExternAny;
 }
 
+<span class="doccomment">/// [`PhantomData`] but contravariant over `'h`, invariant over `T`,
+/// and marks the type as `!Send` and `!Sync`.
+///
+/// To construct values of this type, you still must use the expression
+/// `PhantomData`, as Rust doesn't like using type definitions as unit struct
+/// constructors.
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">type </span>PhantomDataBuilder&lt;<span class="lifetime">'h</span>, S&gt; = PhantomData&lt;(
+	<span class="comment">// `'h` contravariant
+	</span><span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="lifetime">'h </span>()),
+	<span class="comment">// `S` invariant
+	</span><span class="kw">fn</span>(S) -&gt; S,
+	<span class="comment">// `!Send` and `!Sync`
+	</span><span class="kw-2">*mut </span>()
+)&gt;;
+
 <span class="doccomment">/// [`PhantomData`] but invariant over `T`
 ///
 /// To construct values of this type, you still must use the expression
@@ -815,95 +987,220 @@
 /// constructors.
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">type </span>PhantomDataInvariant&lt;T&gt; = PhantomData&lt;<span class="kw">fn</span>(T) -&gt; T&gt;;
 
-<span class="doccomment">/// Provides convenience method
-/// [`cast_lifetime_write`](PtrWriteCastLifetimeExt::cast_lifetime_write)
-/// for pointers to references, to cast the lifetime of the reference type to
-/// something else before writing to the pointer (extremely, _extremely_
-/// simple to misuse!)
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">trait </span>PtrWriteCastLifetimeExt&lt;T&gt; {
-	<span class="doccomment">/// Convenience method to change the lifetime of the reference type of the
-	/// pointer, then call `write` on the casted pointer
-	///
-	/// # Safety
-	///
-	/// You must ensure that your lifetimes are correct, as well as follow
-	/// safety requirements of [`ptr::write`](core::ptr::write).
-	</span><span class="kw">unsafe fn </span>cast_lifetime_write(<span class="self">self</span>, value: <span class="kw-2">&amp;</span>T);
-}
-
-<span class="kw">impl</span>&lt;T&gt; PtrWriteCastLifetimeExt&lt;T&gt; <span class="kw">for </span><span class="kw-2">*mut &amp;</span>T {
-	<span class="attr">#[inline(always)]
-	</span><span class="kw">unsafe fn </span>cast_lifetime_write(<span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) {
-		<span class="kw">unsafe </span>{ <span class="self">self</span>.cast::&lt;<span class="kw-2">&amp;</span>T&gt;().write(value) }
-	}
-}
-
-<span class="macro">macro_rules!</span> gen_builder {
+<span class="macro">macro_rules!</span> gen_struct {
 	{
 		$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>:meta]</span>)*
-		<span class="macro-nonterminal">$name</span>:ident
-		deref(<span class="macro-nonterminal">$value</span>:ident) -&gt; <span class="macro-nonterminal">$deref</span>:ty {
-			$(<span class="macro-nonterminal">$deref_impl</span>:tt)*
-		}
+		<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>:ident;
 
-		$(<span class="macro-nonterminal">$field</span>:ident: <span class="macro-nonterminal">$slot</span>:ident;)*
+		$(
+			deref <span class="macro-nonterminal">$deref_type</span>:ty;
+			deref_value <span class="macro-nonterminal">$deref_value</span>:expr;
+		)<span class="question-mark">?
+
+		</span>$(field <span class="macro-nonterminal">$field</span>:ident: <span class="macro-nonterminal">$slot</span>:ident;)*
 	} =&gt; {
 		<span class="attr">#[repr(transparent)]
-		</span>$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>]</span>)*
-		<span class="kw">pub struct </span><span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h</span>, S&gt;
-		<span class="kw">where
-			</span>S: State
-		{
+		</span><span class="kw">pub struct </span><span class="macro-nonterminal">$struct_name</span>&lt;<span class="lifetime">'h</span>, S: State&gt; {
 			inner: Inner&lt;<span class="lifetime">'h</span>&gt;,
-			__marker: PhantomDataInvariant&lt;S&gt;
+			__marker: PhantomDataBuilder&lt;<span class="lifetime">'h</span>, S&gt;
 		}
 
 		<span class="kw">struct </span>Inner&lt;<span class="lifetime">'h</span>&gt; {
-			__deref: core::cell::UnsafeCell&lt;<span class="prelude-ty">Option</span>&lt;<span class="macro-nonterminal">$deref</span>&gt;&gt;,
-			$(<span class="macro-nonterminal">$field</span>: <span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;),*
+			$(__deref: ::core::cell::UnsafeCell&lt;::core::option::Option&lt;<span class="macro-nonterminal">$deref_type</span>&gt;&gt;,)<span class="question-mark">?
+			</span>$(<span class="macro-nonterminal">$field</span>: <span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;),*
 		}
 
-		<span class="kw">impl </span><span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'static</span>, StateUninit&gt; {
+		<span class="kw">impl </span><span class="macro-nonterminal">$struct_name</span>&lt;<span class="lifetime">'static</span>, StateUninit&gt; {
 			<span class="attr">#[inline(always)]
 			</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
 				<span class="self">Self </span>{
 					inner: Inner {
-						__deref: core::cell::UnsafeCell::new(<span class="prelude-val">None</span>),
-						$(<span class="macro-nonterminal">$field</span>: <span class="macro-nonterminal">$slot </span>{ uninit: () }),*
-						<span class="comment">// todo when all slots have been converted to use the macro, use this
-						// $($field: $slot::uninit()),*
-					</span>},
+						$(__deref: ::core::cell::UnsafeCell::new(<span class="prelude-val">None</span>::&lt;<span class="macro-nonterminal">$deref_type</span>&gt;),)<span class="question-mark">?
+						</span>$(<span class="macro-nonterminal">$field</span>: <span class="macro-nonterminal">$slot::uninit</span>()),*
+					},
 					__marker: PhantomData
 				}
 			}
 		}
 
-		<span class="kw">impl</span>&lt;<span class="lifetime">'h</span>, S&gt; Deref <span class="kw">for </span><span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h</span>, S&gt;
-		<span class="kw">where
-			</span>S: State
-		{
-			<span class="kw">type </span>Target = <span class="macro-nonterminal">$deref</span>;
+		$(
+			<span class="kw">impl</span>&lt;<span class="lifetime">'h</span>, S&gt; ::core::ops::Deref <span class="kw">for </span><span class="macro-nonterminal">$struct_name</span>&lt;<span class="lifetime">'h</span>, S&gt;
+			<span class="kw">where
+				</span>S: State
+			{
+				<span class="kw">type </span>Target = <span class="macro-nonterminal">$deref_type</span>;
+
+				<span class="attr">#[inline(always)]
+				</span><span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="macro-nonterminal">$deref_type </span>{
+					<span class="comment">// SAFETY: we are not thread safe so taking mut ref like
+					// this of the inner value of UnsafeCell temporarily is fine,
+					// we won't ever have two mut references
+					</span><span class="kw">unsafe </span>{
+						(<span class="kw-2">*</span><span class="self">self</span>.inner.__deref.get())
+							.get_or_insert_with(|| <span class="macro-nonterminal">$deref_value</span>)
+					}
+				}
+			}
+		)<span class="question-mark">?
+	</span>};
+}
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_struct;
+
+<span class="macro">macro_rules!</span> gen_slot {
+	{
+		$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>:meta]</span>)*
+		slot <span class="macro-nonterminal">$slot</span>:ident;
+		$(field <span class="macro-nonterminal">$field</span>:ident: <span class="macro-nonterminal">$field_type</span>:ty;)*
+	} =&gt; {
+		$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>]</span>)*
+		<span class="kw">pub </span>union <span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt; {
+			uninit: (),
+			any: <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny,
+			$(<span class="macro-nonterminal">$field</span>: ::core::mem::ManuallyDrop&lt;<span class="macro-nonterminal">$field_type</span>&gt;),*
+		}
+
+		<span class="kw">impl </span><span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'static</span>&gt; {
 			<span class="attr">#[inline(always)]
-			</span><span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="macro-nonterminal">$deref </span>{
-				<span class="kw">let </span><span class="macro-nonterminal">$value </span>= <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span><span class="self">self</span>.inner.__deref.get() };
-				$(<span class="macro-nonterminal">$deref_impl</span>)*
+			</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>uninit() -&gt; <span class="self">Self </span>{
+				<span class="self">Self </span>{ uninit: () }
+			}
+		}
+
+		<span class="macro">gen_slot_impl!</span> {
+			slot <span class="macro-nonterminal">$slot</span>;
+			<span class="kw">unsafe impl </span><span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny;
+
+			result <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny;
+
+			write(<span class="self">self</span>, slot) {
+				<span class="kw-2">*</span>slot = <span class="macro-nonterminal">$slot </span>{ any: <span class="self">self </span>}
+			}
+
+			read(slot) {
+				<span class="kw">unsafe </span>{ slot.any }
+			}
+
+			as_ref(result) {
+				result
+			}
+		}
+	};
+}
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_slot;
+
+<span class="macro">macro_rules!</span> gen_slot_impl {
+	{
+		$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>:meta]</span>)*
+		slot <span class="macro-nonterminal">$slot</span>:ident;
+		<span class="kw">unsafe impl </span><span class="macro-nonterminal">$impl_type</span>:ty;
+
+		result <span class="macro-nonterminal">$result_type</span>:ty;
+
+		write(<span class="macro-nonterminal">$write_self</span>:ident, <span class="macro-nonterminal">$write_slot</span>:ident) {
+			$(<span class="macro-nonterminal">$write_impl</span>:tt)*
+		}
+
+		read(<span class="macro-nonterminal">$read_slot</span>:ident) {
+			$(<span class="macro-nonterminal">$read_impl</span>:tt)*
+		}
+
+		as_ref(<span class="macro-nonterminal">$as_ref_result</span>:ident) {
+			$(<span class="macro-nonterminal">$as_ref_impl</span>:tt)*
+		}
+	} =&gt; {
+		$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>]</span>)*
+		<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'h</span>&gt; SlotUnchecked&lt;<span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;&gt; <span class="kw">for </span><span class="macro-nonterminal">$impl_type </span>{
+			<span class="kw">type </span><span class="prelude-ty">Result</span> = <span class="macro-nonterminal">$result_type</span>;
+
+			<span class="attr">#[inline(always)]
+			</span><span class="kw">unsafe fn </span>write(<span class="macro-nonterminal">$write_self</span>, <span class="macro-nonterminal">$write_slot</span>: <span class="kw-2">&amp;mut </span><span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;) {
+				$(<span class="macro-nonterminal">$write_impl</span>)*
+			}
+
+			<span class="attr">#[inline(always)]
+			</span><span class="kw">unsafe fn </span>read(<span class="macro-nonterminal">$read_slot</span>: <span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;) -&gt; <span class="macro-nonterminal">$result_type </span>{
+				$(<span class="macro-nonterminal">$read_impl</span>)*
+			}
+
+			<span class="attr">#[inline(always)]
+			</span><span class="kw">fn </span>as_ref&lt;<span class="lifetime">'as_ref</span>&gt;(<span class="macro-nonterminal">$as_ref_result</span>: <span class="kw-2">&amp;</span><span class="lifetime">'as_ref </span><span class="macro-nonterminal">$result_type</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'as_ref </span>ExternAny {
+				$(<span class="macro-nonterminal">$as_ref_impl</span>)*
 			}
 		}
 	}
 }
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_builder;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_slot_impl;
+
+<span class="doccomment">/// macro for the boilerplate of calling `SlotUnchecked::read`
+/// followed by conversion to `&amp;JsValue`
+///
+/// # Examples
+///
+/// ```ignore
+/// unsafe {
+///    unsafe_read_slots! {
+///       self
+///       value: Value
+///       value2: Value2
+///       cheese: Cheese
+///    }
+/// }
+/// ```
+///
+/// Expands to:
+///
+/// ```ignore
+/// unsafe {
+///    let value = Value::read(self.inner.value);
+///    let value = value.as_ref().as_js_value();
+///    let value2 = Value2::read(self.inner.value2);
+///    let value2 = value2.as_ref().as_js_value();
+///    let cheese = Cheese::read(self.inner.cheese);
+///    let cheese = cheese.as_ref().as_js_value();
+/// }
+/// ```
+///
+/// Well... not quite, but, good enough for purposes of demonstration.
+</span><span class="macro">macro_rules!</span> unsafe_read_slots {
+	{
+		<span class="macro-nonterminal">$self</span>:ident
+		$(<span class="macro-nonterminal">$ident</span>:ident: <span class="macro-nonterminal">$ty</span>:ident)*
+	} =&gt; {
+		$(
+			<span class="kw">let </span><span class="macro-nonterminal">$ident </span>= <span class="kw">unsafe </span>{ <span class="macro-nonterminal">$ty::read</span>(<span class="macro-nonterminal">$self</span>.inner.<span class="macro-nonterminal">$ident</span>) };
+			<span class="kw">let </span><span class="macro-nonterminal">$ident </span>= <span class="macro-nonterminal">$ty::as_ref</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$ident</span>).as_js_value();
+		)*
+	}
+}
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>unsafe_read_slots;
 
 <span class="macro">macro_rules!</span> gen_state {
 	{
-		<span class="macro-nonterminal">$state</span>:ident
-		<span class="macro-nonterminal">$state_container</span>:ident
-		<span class="macro-nonterminal">$state_uninit</span>:ident
-		$(<span class="macro-nonterminal">$field</span>:ident <span class="macro-nonterminal">$field_init</span>:ident)*
+		$(
+			$(<span class="attr">#[<span class="macro-nonterminal">$state_meta</span>:meta]</span>)*
+			state
+		)<span class="question-mark">?
+
+		</span>$(
+			$(<span class="attr">#[<span class="macro-nonterminal">$container_meta</span>:meta]</span>)*
+			container
+		)<span class="question-mark">?
+
+		</span>$(
+			$(<span class="attr">#[<span class="macro-nonterminal">$uninit_meta</span>:meta]</span>)*
+			uninit
+		)<span class="question-mark">?
+
+		</span>$(
+			field <span class="macro-nonterminal">$field</span>:ident;
+			init <span class="macro-nonterminal">$field_init</span>:ident;
+		)*
 	} =&gt; {
-		<span class="kw">pub trait </span><span class="macro-nonterminal">$state </span>{
+		$($(<span class="attr">#[<span class="macro-nonterminal">$state_meta</span>]</span>)<span class="kw-2">*</span>)<span class="question-mark">?
+		</span><span class="kw">pub trait </span>State {
 			$(
 				<span class="kw">type </span><span class="macro-nonterminal">$field</span>: InitStatus;
-				<span class="kw">type </span><span class="macro-nonterminal">$field_init</span>&lt;S: <span class="question-mark">?</span>Sized&gt;: <span class="macro-nonterminal">$state</span>;
+				<span class="kw">type </span><span class="macro-nonterminal">$field_init</span>&lt;S: <span class="question-mark">?</span>Sized&gt;: State;
 			)*
 		}
 
@@ -911,27 +1208,30 @@
 			unused_parens,
 			reason = <span class="string">"automatically generated"
 		</span>)]
-		</span><span class="kw">pub struct </span><span class="macro-nonterminal">$state_container</span>&lt;$(<span class="macro-nonterminal">$field</span>),<span class="kw-2">*</span>&gt; {
-			__marker: <span class="macro-nonterminal">$crate::prelude_internal::PhantomDataInvariant</span>&lt;(
+		</span>$($(<span class="attr">#[<span class="macro-nonterminal">$container_meta</span>]</span>)<span class="kw-2">*</span>)<span class="question-mark">?
+		</span><span class="kw">pub struct </span>StateContainer&lt;$(<span class="macro-nonterminal">$field</span>),<span class="kw-2">*</span>&gt; {
+			__marker: PhantomDataInvariant&lt;(
 				$(<span class="macro-nonterminal">$field</span>),*
 			)&gt;
 		}
 
 		<span class="macro">gen_state!</span> {
 			@<span class="kw">impl </span>gen_uninit
-			<span class="macro-nonterminal">$state_container
-			$state_uninit
+			$(
+				$(<span class="attr">#[<span class="macro-nonterminal">$uninit_meta</span>]</span>)*
+				uninit
+			)<span class="question-mark">?
+
 			</span>{}
 			{ $(<span class="macro-nonterminal">$field</span>)* }
 		}
 
 		<span class="kw">impl</span>&lt;$(
 			<span class="macro-nonterminal">$field</span>: InitStatus
-		),<span class="kw-2">*</span>&gt; <span class="macro-nonterminal">$state </span><span class="kw">for </span><span class="macro-nonterminal">$state_container</span>&lt;$(<span class="macro-nonterminal">$field</span>),<span class="kw-2">*</span>&gt; {
+		),<span class="kw-2">*</span>&gt; State <span class="kw">for </span>StateContainer&lt;$(<span class="macro-nonterminal">$field</span>),<span class="kw-2">*</span>&gt; {
 			<span class="macro">gen_state!</span> {
 				@<span class="kw">impl </span>state_init_types
-				<span class="macro-nonterminal">$state_container
-				</span>{}
+				{}
 				{}
 				{ $(<span class="macro-nonterminal">$field $field_init</span>)* }
 			}
@@ -939,8 +1239,50 @@
 	};
 
 	{
+		@<span class="kw">impl </span>gen_uninit
+		$(
+			$(<span class="attr">#[<span class="macro-nonterminal">$uninit_meta</span>:meta]</span>)*
+			uninit
+		)<span class="question-mark">?
+
+		</span>{ $(<span class="macro-nonterminal">$uninit_type</span>:ident)* }
+		{
+			<span class="macro-nonterminal">$field</span>:ident
+			$(<span class="macro-nonterminal">$field_rest</span>:ident)*
+		}
+	} =&gt; {
+		<span class="macro">gen_state!</span> {
+			@<span class="kw">impl </span>gen_uninit
+			$(
+				$(<span class="attr">#[<span class="macro-nonterminal">$uninit_meta</span>]</span>)*
+				uninit
+			)<span class="question-mark">?
+
+			</span>{
+				$(<span class="macro-nonterminal">$uninit_type</span>)*
+				Uninit
+			}
+			{ $(<span class="macro-nonterminal">$field_rest</span>)* }
+		}
+	};
+
+	{
+		@<span class="kw">impl </span>gen_uninit
+		$(
+			$(<span class="attr">#[<span class="macro-nonterminal">$uninit_meta</span>:meta]</span>)*
+			uninit
+		)<span class="question-mark">?
+
+		</span>{ $(<span class="macro-nonterminal">$uninit_type</span>:ident)* }
+		{}
+	} =&gt; {
+		<span class="kw">pub type </span>StateUninit = StateContainer&lt;
+			$(<span class="macro-nonterminal">$uninit_type</span>),*
+		&gt;;
+	};
+
+	{
 		@<span class="kw">impl </span>state_init_types
-		<span class="macro-nonterminal">$state_container</span>:ident
 		{}
 		{}
 		{
@@ -950,8 +1292,7 @@
 	} =&gt; {
 		<span class="macro">gen_state!</span> {
 			@<span class="kw">impl </span>state_init_types
-			<span class="macro-nonterminal">$state_container
-			</span>{}
+			{}
 			{ <span class="macro-nonterminal">$field_next $field_init_next </span>}
 			{ $(<span class="macro-nonterminal">$field_rest $field_init_rest</span>)* }
 		}
@@ -959,7 +1300,6 @@
 
 	{
 		@<span class="kw">impl </span>state_init_types
-		<span class="macro-nonterminal">$state_container</span>:ident
 		{ $(<span class="macro-nonterminal">$field_prev</span>:ident <span class="macro-nonterminal">$field_init_prev</span>:ident)* }
 		{ <span class="macro-nonterminal">$field</span>:ident <span class="macro-nonterminal">$field_init</span>:ident }
 		{
@@ -968,17 +1308,16 @@
 		}
 	} =&gt; {
 		<span class="kw">type </span><span class="macro-nonterminal">$field </span>= <span class="macro-nonterminal">$field</span>;
-		<span class="kw">type </span><span class="macro-nonterminal">$field_init</span>&lt;S: <span class="question-mark">?</span>Sized&gt; = <span class="macro-nonterminal">$state_container</span>&lt;
+		<span class="kw">type </span><span class="macro-nonterminal">$field_init</span>&lt;S: <span class="question-mark">?</span>Sized&gt; = StateContainer&lt;
 			$(<span class="macro-nonterminal">$field_prev</span>,)*
 			Init&lt;S&gt;,
 			<span class="macro-nonterminal">$field_next</span>,
-			$(<span class="macro-nonterminal">$field_rest</span>,)*
+			$(<span class="macro-nonterminal">$field_rest</span>),*
 		&gt;;
 
 		<span class="macro">gen_state!</span> {
 			@<span class="kw">impl </span>state_init_types
-			<span class="macro-nonterminal">$state_container
-			</span>{
+			{
 				$(<span class="macro-nonterminal">$field_prev $field_init_prev</span>)*
 				<span class="macro-nonterminal">$field $field_init
 			</span>}
@@ -989,95 +1328,78 @@
 
 	{
 		@<span class="kw">impl </span>state_init_types
-		<span class="macro-nonterminal">$state_container</span>:ident
 		{ $(<span class="macro-nonterminal">$field_prev</span>:ident <span class="macro-nonterminal">$field_init_prev</span>:ident)* }
 		{ <span class="macro-nonterminal">$field</span>:ident <span class="macro-nonterminal">$field_init</span>:ident }
 		{}
 	} =&gt; {
 		<span class="kw">type </span><span class="macro-nonterminal">$field </span>= <span class="macro-nonterminal">$field</span>;
-		<span class="kw">type </span><span class="macro-nonterminal">$field_init</span>&lt;S: <span class="question-mark">?</span>Sized&gt; = <span class="macro-nonterminal">$state_container</span>&lt;
+		<span class="kw">type </span><span class="macro-nonterminal">$field_init</span>&lt;S: <span class="question-mark">?</span>Sized&gt; = StateContainer&lt;
 			$(<span class="macro-nonterminal">$field_prev</span>,)*
-			Init&lt;S&gt;,
-		&gt;;
-	};
-
-	{
-		@<span class="kw">impl </span>gen_uninit
-		<span class="macro-nonterminal">$state_container</span>:ident
-		<span class="macro-nonterminal">$state_uninit</span>:ident
-		{ $(<span class="macro-nonterminal">$uninit_ty</span>:ident)* }
-		{
-			<span class="macro-nonterminal">$field</span>:ident
-			$(<span class="macro-nonterminal">$field_rest</span>:ident)*
-		}
-	} =&gt; {
-		<span class="macro">gen_state!</span> {
-			@<span class="kw">impl </span>gen_uninit
-			<span class="macro-nonterminal">$state_container
-			$state_uninit
-			</span>{
-				$(<span class="macro-nonterminal">$uninit_ty</span>)*
-				Uninit
-			}
-			{ $(<span class="macro-nonterminal">$field_rest</span>)* }
-		}
-	};
-
-	{
-		@<span class="kw">impl </span>gen_uninit
-		<span class="macro-nonterminal">$state_container</span>:ident
-		<span class="macro-nonterminal">$state_uninit</span>:ident
-		{ $(<span class="macro-nonterminal">$uninit_ty</span>:ident)* }
-		{}
-	} =&gt; {
-		<span class="kw">pub type </span><span class="macro-nonterminal">$state_uninit </span>= <span class="macro-nonterminal">$state_container</span>&lt;
-			$(<span class="macro-nonterminal">$uninit_ty</span>),*
+			Init&lt;S&gt;
 		&gt;;
 	};
 }
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_state;
 
-<span class="macro">macro_rules!</span> gen_change_state {
-	(<span class="macro-nonterminal">$name</span>:ident) =&gt; {
-		<span class="attr">#[inline(always)]
-		</span><span class="kw">unsafe fn </span>change_state&lt;<span class="lifetime">'h2</span>, S2, F&gt;(<span class="self">self</span>, f: F) -&gt; <span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h2</span>, S2&gt;
-		<span class="kw">where
-			</span><span class="lifetime">'h</span>: <span class="lifetime">'h2</span>,
-			S2: State,
-			F: FnOnce(<span class="kw-2">&amp;mut </span><span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h2</span>, S2&gt;)
-		{
-			<span class="kw">let </span><span class="kw-2">mut </span>changed = <span class="macro-nonterminal">$name </span>{
-				inner: <span class="self">self</span>.inner,
-				__marker: PhantomData
-			};
+<span class="macro">macro_rules!</span> gen_builder_fns {
+	{
+		<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>:ident;
 
-			f(<span class="kw-2">&amp;mut </span>changed);
-			changed
+		$(
+			state <span class="macro-nonterminal">$field_state</span>:ident;
+			init <span class="macro-nonterminal">$field_init</span>:ident;
+			slot <span class="macro-nonterminal">$slot</span>:ident;
+
+			$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>:meta]</span>)*
+			field <span class="macro-nonterminal">$field</span>:ident;
+
+			$(<span class="attr">#[<span class="macro-nonterminal">$meta_unchecked</span>:meta]</span>)*
+			field_unchecked <span class="macro-nonterminal">$fn_name_unchecked</span>:ident;
+		)*
+	} =&gt; {
+		<span class="kw">impl</span>&lt;<span class="lifetime">'h</span>, S: State&gt; <span class="macro-nonterminal">$struct_name</span>&lt;<span class="lifetime">'h</span>, S&gt; {
+			<span class="macro">gen_change_state!</span>(<span class="macro-nonterminal">$struct_name</span>);
+
+			$(
+				<span class="macro">gen_builder_fn!</span> {
+					<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>;
+
+					state <span class="macro-nonterminal">$field_state</span>;
+					init <span class="macro-nonterminal">$field_init</span>;
+					slot <span class="macro-nonterminal">$slot</span>;
+
+					$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>:meta]</span>)*
+					field <span class="macro-nonterminal">$field</span>;
+
+					$(<span class="attr">#[<span class="macro-nonterminal">$meta_unchecked</span>:meta]</span>)*
+					field_unchecked <span class="macro-nonterminal">$fn_name_unchecked</span>;
+				}
+			)*
 		}
-	};
+	}
 }
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_change_state;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_builder_fns;
 
 <span class="macro">macro_rules!</span> gen_builder_fn {
 	{
-		<span class="macro-nonterminal">$name</span>:ident
+		<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>:ident;
 
-		<span class="macro-nonterminal">$field_state</span>:ident
-		<span class="macro-nonterminal">$field_state_init</span>:ident
-		<span class="macro-nonterminal">$slot</span>:ident
+		state <span class="macro-nonterminal">$field_state</span>:ident;
+		init <span class="macro-nonterminal">$field_init</span>:ident;
+		slot <span class="macro-nonterminal">$slot</span>:ident;
 
 		$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>:meta]</span>)*
-		<span class="macro-nonterminal">$field</span>:ident
+		field <span class="macro-nonterminal">$field</span>:ident;
 
 		$(<span class="attr">#[<span class="macro-nonterminal">$meta_unchecked</span>:meta]</span>)*
-		<span class="macro-nonterminal">$fn_name_unchecked</span>:ident
+		field_unchecked <span class="macro-nonterminal">$fn_name_unchecked</span>:ident;
 	} =&gt; {
 		<span class="attr">#[inline(always)]
 		</span>$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>]</span>)*
 		<span class="kw">pub fn </span><span class="macro-nonterminal">$field</span>&lt;<span class="lifetime">'h2</span>, T&gt;(
 			<span class="self">self</span>,
 			<span class="macro-nonterminal">$field</span>: T
-		) -&gt; <span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h2</span>, S::<span class="macro-nonterminal">$field_state_init</span>&lt;T&gt;&gt;
+		) -&gt; <span class="macro-nonterminal">$struct_name</span>&lt;<span class="lifetime">'h2</span>, S::<span class="macro-nonterminal">$field_init</span>&lt;T&gt;&gt;
 		<span class="kw">where
 			</span><span class="lifetime">'h</span>: <span class="lifetime">'h2</span>,
 			S::<span class="macro-nonterminal">$field_state</span>: IsUninit,
@@ -1106,7 +1428,7 @@
 		<span class="kw">pub unsafe fn </span><span class="macro-nonterminal">$fn_name_unchecked</span>&lt;<span class="lifetime">'h2</span>, T&gt;(
 			<span class="self">self</span>,
 			<span class="macro-nonterminal">$field</span>: T
-		) -&gt; <span class="macro-nonterminal">$name</span>&lt;<span class="lifetime">'h2</span>, S::<span class="macro-nonterminal">$field_state_init</span>&lt;T&gt;&gt;
+		) -&gt; <span class="macro-nonterminal">$struct_name</span>&lt;<span class="lifetime">'h2</span>, S::<span class="macro-nonterminal">$field_init</span>&lt;T&gt;&gt;
 		<span class="kw">where
 			</span><span class="lifetime">'h</span>: <span class="lifetime">'h2</span>,
 			S::<span class="macro-nonterminal">$field_state</span>: IsUninit,
@@ -1118,164 +1440,156 @@
 }
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_builder_fn;
 
-<span class="doccomment">/// macro for the boilerplate of calling `SlotUnchecked::read`
-/// followed by conversion to `&amp;JsValue`
-///
-/// # Examples
-///
-/// ```ignore
-/// unsafe {
-///    read_slots! {
-///       self
-///       value: Value
-///       value2: Value2
-///       cheese: Cheese
-///    }
-/// }
-/// ```
-///
-/// Expands to:
-///
-/// ```ignore
-/// unsafe {
-///    let value = Value::read(self.inner.value);
-///    let value = value.as_ref().as_js_value();
-///    let value2 = Value2::read(self.inner.value2);
-///    let value2 = value2.as_ref().as_js_value();
-///    let cheese = Cheese::read(self.inner.cheese);
-///    let cheese = cheese.as_ref().as_js_value();
-/// }
-/// ```
-///
-/// Well... not quite, but, good enough for purposes of demonstration.
-</span><span class="macro">macro_rules!</span> read_slots {
-	{
-		<span class="macro-nonterminal">$self</span>:ident
-		$(<span class="macro-nonterminal">$ident</span>:ident: <span class="macro-nonterminal">$ty</span>:ident)*
-	} =&gt; {
-		$(
-			<span class="kw">let </span><span class="macro-nonterminal">$ident </span>= <span class="macro-nonterminal">$ty::read</span>(<span class="macro-nonterminal">$self</span>.inner.<span class="macro-nonterminal">$ident</span>);
-			<span class="kw">let </span><span class="macro-nonterminal">$ident </span>= <span class="macro-nonterminal">$ty::as_ref</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$ident</span>).as_js_value();
-		)*
-	}
-}
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>read_slots;
+<span class="macro">macro_rules!</span> gen_change_state {
+	(<span class="macro-nonterminal">$struct_name</span>:ident) =&gt; {
+		<span class="attr">#[inline(always)]
+		</span><span class="kw">unsafe fn </span>change_state&lt;<span class="lifetime">'h2</span>, S2, F&gt;(<span class="self">self</span>, f: F) -&gt; <span class="macro-nonterminal">$struct_name</span>&lt;<span class="lifetime">'h2</span>, S2&gt;
+		<span class="kw">where
+			</span><span class="lifetime">'h</span>: <span class="lifetime">'h2</span>,
+			S2: State,
+			F: FnOnce(<span class="kw-2">&amp;mut </span><span class="macro-nonterminal">$struct_name</span>&lt;<span class="lifetime">'h2</span>, S2&gt;)
+		{
+			<span class="kw">let </span><span class="kw-2">mut </span>changed = <span class="macro-nonterminal">$struct_name </span>{
+				inner: <span class="self">self</span>.inner,
+				__marker: PhantomData
+			};
 
-<span class="macro">macro_rules!</span> gen_slot {
-	{
-		$(<span class="attr">#[<span class="macro-nonterminal">$union_meta</span>:meta]</span>)*
-		<span class="macro-nonterminal">$slot</span>:ident
-		$(field <span class="macro-nonterminal">$field</span>:ident { $(<span class="macro-nonterminal">$field_type</span>:tt)* })*
-
-		$(
-			<span class="kw">impl for </span>{ $(<span class="macro-nonterminal">$impl_type</span>:tt)* } $(<span class="macro-nonterminal">$</span><span class="kw">unsafe</span>:<span class="macro-nonterminal">ident</span>)<span class="question-mark">? </span>{
-				$(<span class="macro-nonterminal">$impl_stuff</span>:tt)*
-			}
-		)*
-	} =&gt; {
-		$(<span class="attr">#[<span class="macro-nonterminal">$union_meta</span>]</span>)*
-		<span class="kw">pub </span>union <span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt; {
-			uninit: (),
-			$(<span class="macro-nonterminal">$field</span>: $(<span class="macro-nonterminal">$field_type</span>)<span class="kw-2">*</span>),*
+			f(<span class="kw-2">&amp;mut </span>changed);
+			changed
 		}
+	};
+}
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_change_state;
 
-		<span class="kw">impl </span><span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'static</span>&gt; {
+<span class="macro">macro_rules!</span> gen_call_fn {
+	{
+		<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>:ident;
+		raw_call <span class="macro-nonterminal">$raw_call</span>:expr;
+		<span class="kw">return </span><span class="macro-nonterminal">$return_type</span>:ty;
+
+		$(<span class="macro-nonterminal">$rest</span>:tt)*
+	} =&gt; {
+		<span class="macro">gen_call_fn!</span> {
+			@<span class="kw">impl </span>nom_fields
+			<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>;
+			raw_call <span class="macro-nonterminal">$raw_call</span>;
+			<span class="kw">return </span><span class="macro-nonterminal">$return_type</span>;
+
+			fields {}
+
+			$(<span class="macro-nonterminal">$rest</span>)*
+		}
+	};
+
+	{
+		@<span class="kw">impl </span>nom_fields
+		<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>:ident;
+		raw_call <span class="macro-nonterminal">$raw_call</span>:expr;
+		<span class="kw">return </span><span class="macro-nonterminal">$return_type</span>:ty;
+
+		fields { $(<span class="macro-nonterminal">$fields</span>:tt)* }
+
+		field <span class="macro-nonterminal">$field_name</span>:ident;
+		state <span class="macro-nonterminal">$field_state</span>:ident;
+		init Init&lt;<span class="macro-nonterminal">$slot</span>:ident&gt;;
+
+		$(<span class="macro-nonterminal">$stuff</span>:tt)*
+	} =&gt; {
+		<span class="macro">gen_call_fn!</span> {
+			@<span class="kw">impl </span>nom_fields
+			<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>;
+			raw_call <span class="macro-nonterminal">$raw_call</span>;
+			<span class="kw">return </span><span class="macro-nonterminal">$return_type</span>;
+
+			fields {
+				$(<span class="macro-nonterminal">$fields</span>)*
+
+				field
+				{ <span class="macro-nonterminal">$field_state</span>: SlotUnchecked&lt;<span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;&gt;, }
+				{ Init&lt;<span class="macro-nonterminal">$field_state</span>&gt; }
+				{ <span class="macro-nonterminal">$field_name</span>: <span class="macro-nonterminal">$field_state </span>}
+				{}
+			}
+
+			$(<span class="macro-nonterminal">$stuff</span>)*
+		}
+	};
+
+	{
+		@<span class="kw">impl </span>nom_fields
+		<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>:ident;
+		raw_call <span class="macro-nonterminal">$raw_call</span>:expr;
+		<span class="kw">return </span><span class="macro-nonterminal">$return_type</span>:ty;
+
+		fields { $(<span class="macro-nonterminal">$fields</span>:tt)* }
+
+		field <span class="macro-nonterminal">$field_name</span>:ident;
+		state <span class="macro-nonterminal">$field_state</span>:ident;
+		init Uninit;
+
+		$(<span class="macro-nonterminal">$stuff</span>:tt)*
+	} =&gt; {
+		<span class="macro">gen_call_fn!</span> {
+			@<span class="kw">impl </span>nom_fields
+			<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>;
+			raw_call <span class="macro-nonterminal">$raw_call</span>;
+			<span class="kw">return </span><span class="macro-nonterminal">$return_type</span>;
+
+			fields {
+				$(<span class="macro-nonterminal">$fields</span>)*
+
+				field
+				{}
+				{ Uninit }
+				{}
+				{ <span class="macro-nonterminal">$field_name </span>}
+			}
+
+			$(<span class="macro-nonterminal">$stuff</span>)*
+		}
+	};
+
+	{
+		@<span class="kw">impl </span>nom_fields
+		<span class="kw">struct </span><span class="macro-nonterminal">$struct_name</span>:ident;
+		raw_call <span class="macro-nonterminal">$raw_call</span>:expr;
+		<span class="kw">return </span><span class="macro-nonterminal">$return_type</span>:ty;
+
+		fields {
+			$(
+				field
+				{ $(<span class="macro-nonterminal">$impl_param</span>:tt)* }
+				{ $(<span class="macro-nonterminal">$struct_param</span>:tt)* }
+				{ $(<span class="macro-nonterminal">$unsafe_read_slots_input</span>:tt)* }
+				{ $(<span class="macro-nonterminal">$unused_fields</span>:tt)* }
+			)*
+		}
+	} =&gt; {
+		<span class="kw">impl</span>&lt;
+			<span class="lifetime">'h</span>,
+			$($(<span class="macro-nonterminal">$impl_param</span>)<span class="kw-2">*</span>)*
+		&gt; <span class="macro-nonterminal">$struct_name</span>&lt;<span class="lifetime">'h</span>, StateContainer&lt;
+			$($(<span class="macro-nonterminal">$struct_param</span>)<span class="kw-2">*</span>),*
+		&gt;&gt; {
 			<span class="attr">#[inline(always)]
-			</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>uninit() -&gt; <span class="self">Self </span>{
-				<span class="self">Self </span>{ uninit: () }
-			}
-		}
-
-		<span class="macro">gen_slot!</span> {
-			@<span class="kw">impl </span>trait_impl
-			<span class="kw">unsafe </span><span class="macro-nonterminal">$slot </span>{ <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny } {
-				result { <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny }
-				write(<span class="self">self</span>, slot) {
-					<span class="kw-2">*</span>slot = <span class="macro-nonterminal">$slot </span>{ any: <span class="self">self </span>}
+			</span><span class="kw">pub fn </span>call_fn(<span class="self">self</span>) -&gt; <span class="macro-nonterminal">$return_type </span>{
+				<span class="macro">unsafe_read_slots!</span> {
+					<span class="self">self
+					</span>$($(<span class="macro-nonterminal">$unsafe_read_slots_input</span>)<span class="kw-2">*</span>)*
 				}
-				read(slot) {
-					<span class="kw">unsafe </span>{ slot.any }
-				}
-				as_ref(result) {
-					result
-				}
-			}
-		}
 
-		$(
-			<span class="macro">gen_slot!</span> {
-				@<span class="kw">impl </span>trait_impl
-				$(<span class="macro-nonterminal">$</span><span class="kw">unsafe</span>)<span class="question-mark">? </span><span class="macro-nonterminal">$slot </span>{ $(<span class="macro-nonterminal">$impl_type</span>)* } { $(<span class="macro-nonterminal">$impl_stuff</span>)* }
-			}
-		)*
-	};
+				$($(
+					<span class="attr">#[allow(
+						clippy::drop_non_drop,
+						reason = <span class="string">"automatically generated"
+					</span>)]
+					</span>drop(<span class="self">self</span>.inner.<span class="macro-nonterminal">$unused_fields</span>);
+				)<span class="kw-2">*</span>)*
 
-	{
-		@<span class="kw">impl </span>trait_impl
-		<span class="kw">unsafe </span><span class="macro-nonterminal">$slot</span>:ident { $(<span class="macro-nonterminal">$impl_type</span>:tt)* } {
-			result { $(<span class="macro-nonterminal">$result</span>:tt)* }
-
-			write(<span class="macro-nonterminal">$self</span>:ident, <span class="macro-nonterminal">$slot_write_param</span>:ident) $(-&gt; { $(<span class="macro-nonterminal">$write_return_type</span>:tt)* })<span class="question-mark">? </span>{
-				$(<span class="macro-nonterminal">$write_impl</span>:tt)*
-			}
-
-			read(<span class="macro-nonterminal">$slot_read_param</span>:ident) $(-&gt; { $(<span class="macro-nonterminal">$read_return_type</span>:tt)* })<span class="question-mark">? </span>{
-				$(<span class="macro-nonterminal">$read_impl</span>:tt)*
-			}
-
-			as_ref(<span class="macro-nonterminal">$result_as_ref_param</span>:ident) $(-&gt; { $(<span class="macro-nonterminal">$as_ref_return_type</span>:tt)* })<span class="question-mark">? </span>{
-				$(<span class="macro-nonterminal">$as_ref_impl</span>:tt)*
-			}
-		}
-	} =&gt; {
-		<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'h</span>&gt; SlotUnchecked&lt;<span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;&gt; <span class="kw">for </span>$(<span class="macro-nonterminal">$impl_type</span>)* {
-			<span class="kw">type </span><span class="prelude-ty">Result</span> = $(<span class="macro-nonterminal">$result</span>)<span class="kw-2">*</span>;
-
-			<span class="attr">#[inline]
-			</span><span class="kw">unsafe fn </span>write(
-				<span class="macro-nonterminal">$self</span>,
-				<span class="macro-nonterminal">$slot_write_param</span>: <span class="kw-2">&amp;mut </span><span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;
-			) {
-				$(<span class="macro-nonterminal">$write_impl</span>)*
-			}
-
-			<span class="attr">#[inline]
-			</span><span class="kw">unsafe fn </span>read(
-				<span class="macro-nonterminal">$slot_read_param</span>: <span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;
-			) -&gt; $(<span class="macro-nonterminal">$result</span>)* {
-				$(<span class="macro-nonterminal">$read_impl</span>)*
-			}
-
-			<span class="attr">#[inline]
-			</span><span class="kw">fn </span>as_ref&lt;<span class="lifetime">'h2</span>&gt;(
-				<span class="macro-nonterminal">$result_as_ref_param</span>: <span class="kw-2">&amp;</span><span class="lifetime">'h2 </span>$(<span class="macro-nonterminal">$result</span>)*
-			) -&gt; <span class="macro">gen_slot!</span> {
-				@<span class="kw">impl </span>mk_return_type_as_ref
-				$(<span class="macro-nonterminal">$as_ref_return_type</span>)*
-			} {
-				$(<span class="macro-nonterminal">$as_ref_impl</span>)*
-			}
+				<span class="macro-nonterminal">$raw_call
+			</span>}
 		}
 	};
-
-	{
-		@<span class="kw">impl </span>trait_impl
-		<span class="macro-nonterminal">$slot</span>:ident { $(<span class="macro-nonterminal">$impl_type</span>:tt)* } {
-			$(<span class="macro-nonterminal">$stuff</span>:tt)*
-		}
-	} =&gt; {
-		<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'h</span>&gt; Slot&lt;<span class="macro-nonterminal">$slot</span>&lt;<span class="lifetime">'h</span>&gt;&gt; <span class="kw">for </span>$(<span class="macro-nonterminal">$impl_type</span>)* {}
-
-		<span class="macro">gen_slot!</span> {
-			@<span class="kw">impl </span>trait_impl
-			<span class="kw">unsafe </span><span class="macro-nonterminal">$slot </span>{ $(<span class="macro-nonterminal">$impl_type</span>)* } {
-				$(<span class="macro-nonterminal">$stuff</span>)*
-			}
-		}
-	};
-
-	{ @<span class="kw">impl </span>mk_return_type_as_ref } =&gt; { <span class="kw-2">&amp;</span><span class="lifetime">'h2 </span>ExternAny };
-	{ @<span class="kw">impl </span>mk_return_type_as_ref $(<span class="macro-nonterminal">$</span><span class="kw">return</span>:<span class="macro-nonterminal">tt</span>)* } =&gt; { $(<span class="macro-nonterminal">$</span><span class="kw">return</span>)* };
 }
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="macro-nonterminal">gen_slot</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>gen_call_fn;
 </code></pre></div></section></main></body></html>

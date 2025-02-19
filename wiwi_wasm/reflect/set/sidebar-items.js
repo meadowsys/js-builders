@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["ExternReflectSet","StateContainer"],"trait":["State"],"type":["StateUninit"],"union":["PropertyKeySlot","ReceiverSlot","TargetSlot","ValueSlot"]};
