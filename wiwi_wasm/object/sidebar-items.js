@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["ExternObject","StateContainer"],"trait":["State"],"type":["StateUninit"],"union":["ValueSlot"]};
+window.SIDEBAR_ITEMS = {"struct":["ExternObject","Idunnololtododeleteme","StateContainer"],"trait":["State"],"type":["StateUninit"],"union":["ValueSlot"]};
