@@ -73,7 +73,8 @@
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
 <a href="#74" id="74">74</a>
-<a href="#75" id="75">75</a></pre></div><pre class="rust"><code><span class="attr">#![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
+<a href="#75" id="75">75</a>
+<a href="#76" id="76">76</a></pre></div><pre class="rust"><code><span class="attr">#![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
 #![allow(
 	dead_code,
 	unused_imports,
@@ -104,7 +105,7 @@
 </span><span class="kw">pub use </span><span class="self">self</span>::any::ExternAny;
 <span class="comment">// pub use self::bigint::{ ExternBigint, ExternBigintNs, bigint };
 </span><span class="attr">#[doc(inline)]
-</span><span class="kw">pub use </span><span class="self">self</span>::object::ExternObject;
+</span><span class="kw">pub use </span><span class="self">self</span>::object::ExternObjectNs;
 <span class="comment">// pub use self::number::{ ExternNumber, ExternNumberNs, ExternNumberObject, number };
 // #[doc(inline)]
 // pub use self::reflect::{ ExternReflectNs, reflect };
@@ -132,7 +133,8 @@
 	reason = <span class="string">"prelude"
 </span>)]
 </span><span class="kw">mod </span>prelude_internal {
-	<span class="kw">pub use crate</span>::{ ExternAny, ExternObject, wasm_bindgen };
+	<span class="comment">// pub use crate::{ ExternAny, ExternObject, wasm_bindgen };
+	</span><span class="kw">pub use crate</span>::{ ExternAny, wasm_bindgen };
 	<span class="kw">pub use </span><span class="kw">crate</span>::util::<span class="kw-2">*</span>;
 	<span class="comment">// pub use core::mem::{ ManuallyDrop, MaybeUninit, transmute };
 	// pub use core::ops::Deref;

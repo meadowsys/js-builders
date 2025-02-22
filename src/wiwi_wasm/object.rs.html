@@ -80,15 +80,10 @@
 <a href="#79" id="79">79</a>
 <a href="#80" id="80">80</a>
 <a href="#81" id="81">81</a>
-<a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
-<a href="#85" id="85">85</a>
-<a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
+<a href="#82" id="82">82</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude_internal::<span class="kw-2">*</span>;
 
 <span class="macro">gen_struct!</span> {
-	<span class="kw">struct </span>ExternObject;
+	<span class="kw">struct </span>ExternObjectNs;
 
 	deref ExternAny;
 	deref_value {
@@ -104,51 +99,18 @@
 	init ValueInit;
 }
 
-<span class="macro">gen_slot!</span> {
-	slot ValueSlot;
-}
-
-<span class="macro">gen_slot_read!</span> {
-	slot ValueSlot;
-	<span class="kw">type </span>Idunnololtododeleteme;
-	result ();
-
-	read(_slot) {
-		<span class="macro">todo!</span>()
-	}
-
-	as_ref(_ersulrul) {
-		<span class="macro">todo!</span>()
-	}
-}
-
 <span class="macro">gen_builder_fns!</span> {
-	<span class="kw">struct </span>ExternObject;
+	<span class="kw">struct </span>ExternObjectNs;
 
 	state Value;
 	init ValueInit;
 	slot ValueSlot;
 
 	field value;
-
-	field_unchecked value_unchecked;
 }
 
 <span class="macro">gen_call_fn!</span> {
-	<span class="kw">struct </span>ExternObject;
-	raw_call {
-		<span class="kw">let _ </span>= value;
-		<span class="macro">todo!</span>()
-	};
-	<span class="kw">return </span><span class="prelude-ty">Result</span>&lt;ExternAny, ExternAny&gt;;
-
-	field value;
-	state Value;
-	init Init&lt;ValueSlot&gt;;
-}
-
-<span class="macro">gen_call_fn!</span> {
-	<span class="kw">struct </span>ExternObject;
+	<span class="kw">struct </span>ExternObjectNs;
 	raw_call {
 		<span class="macro">todo!</span>()
 	};
@@ -157,6 +119,34 @@
 	field value;
 	state Value;
 	init Uninit;
+}
+
+<span class="macro">gen_call_fn!</span> {
+	<span class="kw">struct </span>ExternObjectNs;
+	raw_call {
+		<span class="kw">let _ </span>= value;
+		<span class="macro">todo!</span>()
+	};
+	<span class="kw">return </span>ExternAny;
+
+	field value;
+	state Value;
+	init Init&lt;ValueSlot, marker::AnyMarker&gt;;
+}
+
+<span class="macro">gen_slot!</span> {
+	slot ValueSlot;
+}
+
+<span class="macro">gen_slot_impl!</span> {
+	slot ValueSlot;
+	<span class="kw">impl </span><span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny;
+
+	type_marker marker::AnyMarker;
+	result <span class="kw-2">&amp;</span><span class="lifetime">'h </span>ExternAny;
+
+	simple_rw any;
+	autoderef;
 }
 
 <span class="kw">mod </span>raw {

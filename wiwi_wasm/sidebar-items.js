@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"attr":["wasm_bindgen"],"mod":["object","util"],"struct":["ExternAny","ExternObject"]};
+window.SIDEBAR_ITEMS = {"attr":["wasm_bindgen"],"mod":["object","util"],"struct":["ExternAny","ExternObjectNs"]};
