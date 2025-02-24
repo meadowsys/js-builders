@@ -62,7 +62,10 @@
 <a href="#61" id="61">61</a>
 <a href="#62" id="62">62</a>
 <a href="#63" id="63">63</a>
-<a href="#64" id="64">64</a></pre></div><pre class="rust"><code><span class="kw">use </span>sealed::Sealed;
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a></pre></div><pre class="rust"><code><span class="kw">use </span>sealed::Sealed;
 
 <span class="doccomment">/// Marker trait for... markers
 </span><span class="kw">pub trait </span>TypeMarker: Sealed {}
@@ -101,17 +104,20 @@
 	<span class="string">"any"
 	</span>AnyMarker
 
-	<span class="string">"string"
-	</span>StringMarker
-
-	<span class="string">"number"
-	</span>NumberMarker
-
 	<span class="string">"bigint"
 	</span>BigIntMarker
 
 	<span class="string">"boolean"
 	</span>BooleanMarker
+
+	<span class="string">"number"
+	</span>NumberMarker
+
+	<span class="string">"object"
+	</span>ObjectMarker
+
+	<span class="string">"string"
+	</span>StringMarker
 
 	<span class="string">"symbol"
 	</span>SymbolMarker
