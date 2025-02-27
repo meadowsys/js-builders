@@ -1,5 +1,7 @@
 # wiwi-wasm
 
+**This repo has been archived.** All further development of this package has been moved to a subpackage in [meadowsys/wiwi](https://github.com/meadowsys/wiwi).
+
 Nicer, higher level APIs for working with JavaScript from Rust (WASM), mostly revolving around builder-style APIs
 
 ## MSRV
